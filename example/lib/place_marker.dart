@@ -47,6 +47,8 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
 
+  bool _isDrage = false;
+
   void _onMapCreated(KakaoMapController controller) {
     this.controller = controller;
   }
@@ -57,8 +59,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   }
 
   void _onMarkerTapped(MarkerId markerId) {
-    print("markerId");
-    print(markerId);
     final Marker tappedMarker = markers[markerId];
     if (tappedMarker != null) {
       setState(() {
@@ -118,7 +118,11 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     final Marker marker = Marker(
       markerId: markerId,
       position: MapPoint(_position.target.latitude, _position.target.longitude),
+      draggable: _isDrage,
       infoWindow: InfoWindow(title: markerIdVal, snippet: '*'),
+      markerType: MarkerType.markerTypeBluePin,
+      markerSelectedType: MarkerSelectedType.markerSelectedTypeRedPin,
+      showAnimationType: ShowAnimationType.showAnimationTypeDropFromHeaven,
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -157,17 +161,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     });
   }
 
-  void _changeAnchor() {
-    final Marker marker = markers[selectedMarker];
-    final Offset currentAnchor = marker.anchor;
-    final Offset newAnchor = Offset(1.0 - currentAnchor.dy, currentAnchor.dx);
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        anchorParam: newAnchor,
-      );
-    });
-  }
-
   Future<void> _changeInfoAnchor() async {
     final Marker marker = markers[selectedMarker];
     final Offset currentAnchor = marker.infoWindow.anchor;
@@ -177,24 +170,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
         infoWindowParam: marker.infoWindow.copyWith(
           anchorParam: newAnchor,
         ),
-      );
-    });
-  }
-
-  Future<void> _toggleDraggable() async {
-    final Marker marker = markers[selectedMarker];
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        draggableParam: !marker.draggable,
-      );
-    });
-  }
-
-  Future<void> _toggleFlat() async {
-    final Marker marker = markers[selectedMarker];
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        flatParam: !marker.flat,
       );
     });
   }
@@ -211,16 +186,6 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     });
   }
 
-  Future<void> _changeAlpha() async {
-    final Marker marker = markers[selectedMarker];
-    final double current = marker.alpha;
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        alphaParam: current < 0.1 ? 1.0 : current * 0.75,
-      );
-    });
-  }
-
   Future<void> _changeRotation() async {
     final Marker marker = markers[selectedMarker];
     final double current = marker.rotation;
@@ -231,34 +196,13 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     });
   }
 
-  Future<void> _toggleVisible() async {
-    final Marker marker = markers[selectedMarker];
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        visibleParam: !marker.visible,
-      );
-    });
-  }
-
-  Future<void> _changeZIndex() async {
-    final Marker marker = markers[selectedMarker];
-    final double current = marker.zIndex;
-    setState(() {
-      markers[selectedMarker] = marker.copyWith(
-        zIndexParam: current == 12.0 ? 0.0 : current + 1.0,
-      );
-    });
-  }
-
   void _updateCameraPosition(CameraPosition position) {
-    print("cxzkmcmzlkcml ${position.toString()}");
     setState(() {
       _position = position;
     });
   }
 
   void _onMarkerSelect(MarkerTag markerId) {
-    print("_onMarkerSelect ${markerId}");
   }
 
   @override
@@ -314,36 +258,12 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
                     Column(
                       children: <Widget>[
                         FlatButton(
-                          child: const Text('change alpha'),
-                          onPressed: _changeAlpha,
-                        ),
-                        FlatButton(
-                          child: const Text('change anchor'),
-                          onPressed: _changeAnchor,
-                        ),
-                        FlatButton(
-                          child: const Text('toggle draggable'),
-                          onPressed: _toggleDraggable,
-                        ),
-                        FlatButton(
-                          child: const Text('toggle flat'),
-                          onPressed: _toggleFlat,
-                        ),
-                        FlatButton(
                           child: const Text('change position'),
                           onPressed: _changePosition,
                         ),
                         FlatButton(
                           child: const Text('change rotation'),
                           onPressed: _changeRotation,
-                        ),
-                        FlatButton(
-                          child: const Text('toggle visible'),
-                          onPressed: _toggleVisible,
-                        ),
-                        FlatButton(
-                          child: const Text('change zIndex'),
-                          onPressed: _changeZIndex,
                         ),
                       ],
                     ),

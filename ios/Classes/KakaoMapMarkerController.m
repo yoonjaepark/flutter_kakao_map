@@ -21,22 +21,15 @@ static void InterpretInfoWindow(id<KakaoMapMarkerOptionsSink> sink, NSDictionary
     _mapView = mapView;
       _marker = [MTMapPOIItem poiItem];
       _marker.userObject = markerId;
-    [_mapView addPOIItems:[NSArray arrayWithObjects:_marker, nil]];
+      [_mapView addPOIItems:[NSArray arrayWithObjects:_marker, nil]];
     _consumeTapEvents = NO;
   }
   return self;
 }
 - (void)showInfoWindow {
-//  _mapView.selectedMarker = _marker;
 }
 - (void)hideInfoWindow {
-//  if (_mapView.selectedMarker == _marker) {
-//    _mapView.selectedMarker = nil;
-//  }
 }
-//- (BOOL)isInfoWindowShown {
-//  return _mapView.selectedMarker == _marker;
-//}
 - (BOOL)consumeTapEvents {
   return _consumeTapEvents;
 }
@@ -44,35 +37,28 @@ static void InterpretInfoWindow(id<KakaoMapMarkerOptionsSink> sink, NSDictionary
     [_mapView removePOIItem:_marker];
 }
 - (void)onMarkerTab {
-//    [_mapView selectPOIItem:_marker animated:true];
 }
 
 #pragma mark - KakaoMapMarkerOptionsSink methods
 
-- (void)setAlpha:(float)alpha {
-//  _marker.opacity = alpha;
-}
-- (void)setAnchor:(CGPoint)anchor {
-//  _marker.groundAnchor = anchor;
-}
 - (void)setConsumeTapEvents:(BOOL)consumes {
   _consumeTapEvents = consumes;
 }
 - (void)setDraggable:(BOOL)draggable {
-  _marker.draggable = draggable;
+    if(draggable) {
+        _marker.draggable = YES;
+    } else {
+        _marker.draggable = NO;
+    }
 }
 - (void)setFlat:(BOOL)flat {
-//  _marker.flat = flat;
 }
 - (void)setIcon:(UIImage*)icon {
-//  _marker.icon = icon;
 }
 - (void)setInfoWindowAnchor:(CGPoint)anchor {
-//  _marker.infoWindowAnchor = anchor;
 }
 - (void)setInfoWindowTitle:(NSString*)title snippet:(NSString*)snippet {
-//  _marker.title = title;
-//  _marker.snippet = snippet;
+  _marker.itemName = title;
 }
 - (void)setPosition:(MTMapPoint*)position {
     _marker.mapPoint = position;
@@ -80,11 +66,31 @@ static void InterpretInfoWindow(id<KakaoMapMarkerOptionsSink> sink, NSDictionary
 - (void)setRotation:(CLLocationDegrees)rotation {
   _marker.rotation = rotation;
 }
-- (void)setVisible:(BOOL)visible {
-//  _marker.map = visible ? _mapView : nil;
+- (void)setMarkerType:(int)markerType {
+    MTMapPOIItemMarkerType type;
+    if (markerType == 0) {
+        type = MTMapPOIItemMarkerTypeBluePin;
+    } else if (markerType == 1) {
+        type = MTMapPOIItemMarkerTypeRedPin;
+    } else if (markerType == 2) {
+        type = MTMapPOIItemMarkerTypeYellowPin;
+    } else {
+    }
+    _marker.markerType = MTMapPOIItemMarkerTypeBluePin;
 }
-- (void)setZIndex:(int)zIndex {
-//  _marker.zIndex = zIndex;
+- (void)setMarkerSelectedType:(int)markerSelectedType {
+    MTMapPOIItemMarkerSelectedType type;
+       if (markerSelectedType == 0) {
+           type = MTMapPOIItemMarkerSelectedTypeNone;
+       } else if (markerSelectedType == 1) {
+           type = MTMapPOIItemMarkerSelectedTypeBluePin;
+       } else if (markerSelectedType == 2) {
+           type = MTMapPOIItemMarkerSelectedTypeRedPin;
+       } else if (markerSelectedType == 3) {
+           type = MTMapPOIItemMarkerSelectedTypeYellowPin;
+       } else {
+       }
+       _marker.markerSelectedType = MTMapPOIItemMarkerSelectedTypeYellowPin;
 }
 @end
 
@@ -100,23 +106,13 @@ static int ToInt(NSNumber* data) { return [KakaoMapJsonConversions toInt:data]; 
 
 static BOOL ToBool(NSNumber* data) { return [KakaoMapJsonConversions toBool:data]; }
 
-//static CGPoint ToPoint(NSArray* data) {
-//    return [KakaoMapJsonConversions toPoint:data];
-//}
-
-//static NSArray* PositionToJson(CLLocationCoordinate2D data) {
-//  return [KakaoMapJsonConversions positionToJson:data];
-//}
-
 static void InterpretMarkerOptions(NSDictionary* data, id<KakaoMapMarkerOptionsSink> sink,
                                    NSObject<FlutterPluginRegistrar>* registrar) {
   NSNumber* alpha = data[@"alpha"];
   if (alpha != nil) {
-    [sink setAlpha:ToFloat(alpha)];
   }
   NSArray* anchor = data[@"anchor"];
   if (anchor) {
-//    [sink setAnchor:ToPoint(anchor)];
   }
   NSNumber* draggable = data[@"draggable"];
   if (draggable != nil) {
@@ -146,12 +142,20 @@ static void InterpretMarkerOptions(NSDictionary* data, id<KakaoMapMarkerOptionsS
   }
   NSNumber* visible = data[@"visible"];
   if (visible != nil) {
-    [sink setVisible:ToBool(visible)];
   }
   NSNumber* zIndex = data[@"zIndex"];
   if (zIndex != nil) {
-    [sink setZIndex:ToInt(zIndex)];
   }
+  
+    NSNumber* markerType = data[@"markerType"];
+    if (markerType != nil) {
+      [sink setMarkerType:ToInt(markerType)];
+    }
+    
+    NSNumber* markerSelectedType = data[@"markerSelectedType"];
+       if (markerType != nil) {
+         [sink setMarkerSelectedType:ToInt(markerSelectedType)];
+       }
 }
 
 static void InterpretInfoWindow(id<KakaoMapMarkerOptionsSink> sink, NSDictionary* data) {
@@ -164,7 +168,6 @@ static void InterpretInfoWindow(id<KakaoMapMarkerOptionsSink> sink, NSDictionary
     }
     NSArray* infoWindowAnchor = infoWindow[@"infoWindowAnchor"];
     if (infoWindowAnchor) {
-//      [sink setInfoWindowAnchor:ToPoint(infoWindowAnchor)];
     }
   }
 }
@@ -186,10 +189,6 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   UIImage* image;
   if ([iconData.firstObject isEqualToString:@"defaultMarker"]) {
     CGFloat hue = (iconData.count == 1) ? 0.0f : ToDouble(iconData[1]);
-//    image = [GMSMarker markerImageWithColor:[UIColor colorWithHue:hue / 360.0
-//                                                       saturation:1.0
-//                                                       brightness:0.7
-//                                                            alpha:1.0]];
   } else if ([iconData.firstObject isEqualToString:@"fromAsset"]) {
     if (iconData.count == 2) {
       image = [UIImage imageNamed:[registrar lookupKeyForAsset:iconData[1]]];
@@ -256,11 +255,9 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
 }
 - (void)addMarkers:(NSArray*)markersToAdd {
   for (NSDictionary* marker in markersToAdd) {
-//    CLLocationCoordinate2D position = [MarkersController getPosition:marker];
       NSArray *position = marker[@"position"];
       float latdouble = [position[0] floatValue];
       float londouble = [position[1] floatValue];
-
     NSString* markerId = [MarkersController getMarkerId:marker];
       MTMapPointGeo mapPointGeo = MTMapPointGeoMake(latdouble, londouble);
     KakaoMapMarkerController* controller =
@@ -278,7 +275,7 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
     if (!controller) {
       continue;
     }
-    InterpretMarkerOptions(marker, controller, _registrar);
+          InterpretMarkerOptions(marker, controller, _registrar);
   }
 }
 - (void)removeMarkerIds:(NSArray*)markerIdsToRemove {
@@ -314,8 +311,6 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
   if (!controller) {
     return;
   }
-//  [_methodChannel invokeMethod:@"marker#onDragEnd"
-//                     arguments:@{@"markerId" : markerId, @"position" : PositionToJson(coordinate)}];
 }
 - (void)onInfoWindowTap:(NSString*)markerId {
   if (markerId && _markerIdToController[markerId]) {
@@ -354,11 +349,6 @@ static UIImage* ExtractIcon(NSObject<FlutterPluginRegistrar>* registrar, NSArray
                                details:nil]);
   }
 }
-
-//+ (CLLocationCoordinate2D)getPosition:(NSDictionary*)marker {
-//  NSArray* position = marker[@"position"];
-//  return ToLocation(position);
-//}
 + (NSString*)getMarkerId:(NSDictionary*)marker {
   return marker[@"markerId"];
 }

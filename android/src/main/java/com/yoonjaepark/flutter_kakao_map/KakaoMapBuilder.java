@@ -56,44 +56,28 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
                         activityHashCode,
                         options,
                         activity);
-//        controller.init();
-//        controller.setMyLocationEnabled(myLocationEnabled);
-//        controller.setMyLocationButtonEnabled(myLocationButtonEnabled);
-//        controller.setIndoorEnabled(indoorEnabled);
-//        controller.setTrafficEnabled(trafficEnabled);
-//        controller.setBuildingsEnabled(buildingsEnabled);
-//        controller.setTrackCameraPosition(trackCameraPosition);
-//        controller.setInitialMarkers(initialMarkers);
-//        controller.setInitialPolygons(initialPolygons);
-//        controller.setInitialPolylines(initialPolylines);
-//        controller.setInitialCircles(initialCircles);
-//        controller.setPadding(padding.top, padding.left, padding.bottom, padding.right);
+        controller.setInitialMarkers(initialMarkers);
         return this.controller;
     }
 
     void setInitialCameraPosition(CameraPosition position) {
-//
         options.setInitialCameraPosition(position);
     }
 
     @Override
     public void setCompassEnabled(boolean compassEnabled) {
-//        options.compassEnabled(compassEnabled);
     }
 
     @Override
     public void setMapToolbarEnabled(boolean setMapToolbarEnabled) {
-//        options.mapToolbarEnabled(setMapToolbarEnabled);
     }
 
     @Override
     public void setCameraTargetBounds(MapPointBounds bounds) {
-//        options.latLngBoundsForCameraTarget(bounds);
     }
 
     @Override
     public void setMapType(int mapType) {
-//        options.mapType(mapType);
     }
 
     @Override
@@ -107,12 +91,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
 
     @Override
     public void setMinMaxZoomPreference(Float min, Float max) {
-//        if (min != null) {
-//            options.minZoomPreference(min);
-//        }
-//        if (max != null) {
-//            options.maxZoomPreference(max);
-//        }
     }
 
     @Override
@@ -127,22 +105,18 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
 
     @Override
     public void setRotateGesturesEnabled(boolean rotateGesturesEnabled) {
-//        options.rotateGesturesEnabled(rotateGesturesEnabled);
     }
 
     @Override
     public void setScrollGesturesEnabled(boolean scrollGesturesEnabled) {
-//        options.scrollGesturesEnabled(scrollGesturesEnabled);
     }
 
     @Override
     public void setTiltGesturesEnabled(boolean tiltGesturesEnabled) {
-//        options.tiltGesturesEnabled(tiltGesturesEnabled);
     }
 
     @Override
     public void setZoomGesturesEnabled(boolean zoomGesturesEnabled) {
-//        options.zoomGesturesEnabled(zoomGesturesEnabled);
     }
 
     @Override
@@ -167,7 +141,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
 
     @Override
     public void setZoomControlsEnabled(boolean zoomControlsEnabled) {
-//        options.zoomControlsEnabled(zoomControlsEnabled);
     }
 
     @Override

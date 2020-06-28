@@ -158,7 +158,6 @@ class MapViewBodyState extends State<MapViewBody> {
     return FlatButton(
       onPressed: () async {
         final MapPoint mapPoint = await _controller.getMapCenterPoint();
-        print(mapPoint);
       },
       child: const Text('getMapCenterPoint'),
     );
@@ -176,169 +175,6 @@ class MapViewBodyState extends State<MapViewBody> {
     );
   }
 
-  // Widget _mapToolbarToggler() {
-  //   return FlatButton(
-  //     child: Text('${_mapToolbarEnabled ? 'disable' : 'enable'} map toolbar'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _mapToolbarEnabled = !_mapToolbarEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _latLngBoundsToggler() {
-  //   return FlatButton(
-  //     child: Text(
-  //       _cameraTargetBounds.bounds == null
-  //           ? 'bound camera target'
-  //           : 'release camera target',
-  //     ),
-  //     onPressed: () {
-  //       setState(() {
-  //         _cameraTargetBounds = _cameraTargetBounds.bounds == null
-  //             ? CameraTargetBounds(sydneyBounds)
-  //             : CameraTargetBounds.unbounded;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _zoomBoundsToggler() {
-  //   return FlatButton(
-  //     child: Text(_minMaxZoomPreference.minZoom == null
-  //         ? 'bound zoom'
-  //         : 'release zoom'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _minMaxZoomPreference = _minMaxZoomPreference.minZoom == null
-  //             ? const MinMaxZoomPreference(12.0, 16.0)
-  //             : MinMaxZoomPreference.unbounded;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _rotateToggler() {
-  //   return FlatButton(
-  //     child: Text('${_rotateGesturesEnabled ? 'disable' : 'enable'} rotate'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _rotateGesturesEnabled = !_rotateGesturesEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _scrollToggler() {
-  //   return FlatButton(
-  //     child: Text('${_scrollGesturesEnabled ? 'disable' : 'enable'} scroll'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _scrollGesturesEnabled = !_scrollGesturesEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _tiltToggler() {
-  //   return FlatButton(
-  //     child: Text('${_tiltGesturesEnabled ? 'disable' : 'enable'} tilt'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _tiltGesturesEnabled = !_tiltGesturesEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _zoomToggler() {
-  //   return FlatButton(
-  //     child: Text('${_zoomGesturesEnabled ? 'disable' : 'enable'} zoom'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _zoomGesturesEnabled = !_zoomGesturesEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _zoomControlsToggler() {
-  //   return FlatButton(
-  //     child:
-  //         Text('${_zoomControlsEnabled ? 'disable' : 'enable'} zoom controls'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _zoomControlsEnabled = !_zoomControlsEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _indoorViewToggler() {
-  //   return FlatButton(
-  //     child: Text('${_indoorViewEnabled ? 'disable' : 'enable'} indoor'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _indoorViewEnabled = !_indoorViewEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _myLocationToggler() {
-  //   return FlatButton(
-  //     child: Text(
-  //         '${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _myLocationEnabled = !_myLocationEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Widget _myTrafficToggler() {
-  //   return FlatButton(
-  //     child: Text('${_myTrafficEnabled ? 'disable' : 'enable'} my traffic'),
-  //     onPressed: () {
-  //       setState(() {
-  //         _myTrafficEnabled = !_myTrafficEnabled;
-  //       });
-  //     },
-  //   );
-  // }
-
-  // Future<String> _getFileData(String path) async {
-  //   return await rootBundle.loadString(path);
-  // }
-
-  // void _setMapStyle(String mapStyle) {
-  //   setState(() {
-  //     _nightMode = true;
-  //     _controller.setMapStyle(mapStyle);
-  //   });
-  // }
-
-  // Widget _nightModeToggler() {
-  //   if (!_isMapCreated) {
-  //     return null;
-  //   }
-  //   return FlatButton(
-  //     child: Text('${_nightMode ? 'disable' : 'enable'} night mode'),
-  //     onPressed: () {
-  //       if (_nightMode) {
-  //         setState(() {
-  //           _nightMode = false;
-  //           _controller.setMapStyle(null);
-  //         });
-  //       } else {
-  //         _getFileData('assets/night_mode.json').then(_setMapStyle);
-  //       }
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     final KakaoMap kakaoMap = KakaoMap(
@@ -351,19 +187,6 @@ class MapViewBodyState extends State<MapViewBody> {
       myLocationEnabled: _myLocationEnabled,
       onCameraMove: _updateCameraPosition,
       onCurrentLocationUpdate: _onCurrentLocationUpdate,
-
-      // mapToolbarEnabled: _mapToolbarEnabled,
-      // cameraTargetBounds: _cameraTargetBounds,
-      // minMaxZoomPreference: _minMaxZoomPreference,
-
-      // rotateGesturesEnabled: _rotateGesturesEnabled,
-      // scrollGesturesEnabled: _scrollGesturesEnabled,
-      // tiltGesturesEnabled: _tiltGesturesEnabled,
-      // zoomGesturesEnabled: _zoomGesturesEnabled,
-      // zoomControlsEnabled: _zoomControlsEnabled,
-      // indoorViewEnabled: _indoorViewEnabled,
-      // myLocationButtonEnabled: _myLocationButtonEnabled,
-      // trafficEnabled: _myTrafficEnabled,
     );
 
     final List<Widget> columnChildren = <Widget>[
@@ -400,20 +223,6 @@ class MapViewBodyState extends State<MapViewBody> {
               _currentLocationTrackingModeCycler(),
               _getMapCenterPoint(),
               _myLocationButtonToggler(),
-              // Text(_isMoving ? '(Camera moving)' : '(Camera idle)'),
-              // _compassToggler(),
-              // _mapToolbarToggler(),
-              // _latLngBoundsToggler(),
-              // _zoomBoundsToggler(),
-              // _rotateToggler(),
-              // _scrollToggler(),
-              // _tiltToggler(),
-              // _zoomToggler(),
-              // _zoomControlsToggler(),
-              // _indoorViewToggler(),
-              // _myLocationToggler(),
-              // _myTrafficToggler(),
-              // _nightModeToggler(),
             ],
           ),
         ),
@@ -426,21 +235,13 @@ class MapViewBodyState extends State<MapViewBody> {
     );
   }
 
-// StreamSubscription<OrientationEvent> _orientationEventSubscription;
-
-// _orientationEventSubscription = orientationEvents.listen((OrientationEvent event) {
-//     // orientation event occurred!
-// });
-
   void _updateCameraPosition(CameraPosition position) {
-    print("cxzkmcmzlkcml ${position.toString()}");
     setState(() {
       _position = position;
     });
   }
 
   void _onCurrentLocationUpdate(CameraPosition position) {
-    print("_onCurrentLocationUpdate ${position.toString()}");
     setState(() {
       _currenPosition = position;
     });

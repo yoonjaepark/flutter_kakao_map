@@ -16,6 +16,50 @@ dynamic _offsetToJson(Offset offset) {
   return <dynamic>[offset.dx, offset.dy];
 }
 
+
+// POI Item 아이콘(마커) 타입
+enum MarkerType {
+  /// 파란색 핀 
+  markerTypeBluePin,
+
+  /// 빨간색 핀
+  markerTypeRedPin,
+
+  /// 노란색 핀
+  markerTypeYellowPin,
+
+  // 개발자가 지정한 POI Item 아이콘 이미지 사용
+  markerTypeCustomImage,
+}
+
+enum MarkerSelectedType {
+  /// 선택 효과를 사용하지 않음
+  markerSelectedTypeNone,
+
+  /// 파란색 핀 
+  markerSelectedTypeBluePin,
+
+  /// 빨간색 핀
+  markerSelectedTypeRedPin,
+
+  /// 노란색 핀
+  markerSelectedTypeYellowPin,
+
+  /// 개발자가 지정한 POI Item 아이콘 이미지 사용
+  markerSelectedTypeCustomImage,
+}
+
+enum ShowAnimationType {
+  /// 애니메이션 없음
+  showAnimationTypeNoAnimation,
+
+  /// POI Item 아이콘이 하늘에서 지도 위로 떨어지는 애니매이션
+  showAnimationTypeDropFromHeaven,
+
+  /// POI Item 아이콘이 땅위에서 스프링처럼 튀어나오는 듯한 애니매이션
+  showAnimationTypeSpringFromGround
+}
+
 /// Text labels for a [Marker] info window.
 class InfoWindow {
   /// Creates an immutable representation of a label on for [Marker].
@@ -268,6 +312,9 @@ class Marker {
     this.rotation = 0.0,
     this.visible = true,
     this.zIndex = 0.0,
+    this.markerType = MarkerType.markerTypeBluePin,
+    this.markerSelectedType = MarkerSelectedType.markerSelectedTypeNone,
+    this.showAnimationType = ShowAnimationType.showAnimationTypeDropFromHeaven,
     this.onTap,
     this.onDragEnd,
   }) : assert(alpha == null || (0.0 <= alpha && alpha <= 1.0));
@@ -302,7 +349,7 @@ class Marker {
   /// A description of the bitmap used to draw the marker icon.
   final BitmapDescriptor icon;
 
-  /// A Google Maps InfoWindow.
+  /// A Kakao Maps InfoWindow.
   ///
   /// The window is displayed when the marker is tapped.
   final InfoWindow infoWindow;
@@ -322,6 +369,12 @@ class Marker {
   /// Overlays are drawn in order of z-index, so that lower values means drawn
   /// earlier, and thus appearing to be closer to the surface of the Earth.
   final double zIndex;
+
+  final MarkerType markerType;
+
+  final MarkerSelectedType markerSelectedType;
+  
+  final ShowAnimationType showAnimationType;
 
   /// Callbacks to receive tap events for markers placed on this map.
   final VoidCallback onTap;
@@ -343,6 +396,9 @@ class Marker {
     double rotationParam,
     bool visibleParam,
     double zIndexParam,
+    MarkerType markerTypeParam,
+    MarkerSelectedType markerSelectedTypeParam,
+    ShowAnimationType showAnimationTypeParam,
     VoidCallback onTapParam,
     ValueChanged<MapPoint> onDragEndParam,
   }) {
@@ -359,6 +415,9 @@ class Marker {
       rotation: rotationParam ?? rotation,
       visible: visibleParam ?? visible,
       zIndex: zIndexParam ?? zIndex,
+      markerType: markerTypeParam ?? markerType,
+      markerSelectedType: markerSelectedTypeParam ?? markerSelectedType,
+      showAnimationType: showAnimationTypeParam ?? showAnimationType,
       onTap: onTapParam ?? onTap,
       onDragEnd: onDragEndParam ?? onDragEnd,
     );
@@ -389,6 +448,9 @@ class Marker {
     addIfPresent('rotation', rotation);
     addIfPresent('visible', visible);
     addIfPresent('zIndex', zIndex);
+    addIfPresent('markerType', markerType.index);
+    addIfPresent('markerSelectedType', markerSelectedType.index);
+    addIfPresent('showAnimationType', showAnimationType.index);
     return json;
   }
 
@@ -408,7 +470,10 @@ class Marker {
         position == typedOther.position &&
         rotation == typedOther.rotation &&
         visible == typedOther.visible &&
-        zIndex == typedOther.zIndex;
+        zIndex == typedOther.zIndex && 
+        markerType == typedOther.markerType &&
+        markerSelectedType == typedOther.markerSelectedType &&
+        showAnimationType == typedOther.showAnimationType;
   }
 
   @override
@@ -419,6 +484,7 @@ class Marker {
     return 'Marker{markerId: $markerId, alpha: $alpha, anchor: $anchor, '
         'consumeTapEvents: $consumeTapEvents, draggable: $draggable, flat: $flat, '
         'icon: $icon, infoWindow: $infoWindow, position: $position, rotation: $rotation, '
-        'visible: $visible, zIndex: $zIndex, onTap: $onTap}';
+        'visible: $visible, zIndex: $zIndex, markerType: $markerType, markerSelectedType: $markerSelectedType, '
+        'showAnimationType: $showAnimationType, onTap: $onTap }';
   }
 }

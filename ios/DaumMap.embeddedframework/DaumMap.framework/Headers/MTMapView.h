@@ -234,9 +234,6 @@ typedef int MTMapZoomLevel;
  */
 - (void)didReceiveMemoryWarning;
 
-//- (CGPoint)viewPointFromMapPoint:(MTMapPoint*)mapPoint;
-//- (MTMapPoint*)mapPointFromViewPoint:(CGPoint)viewPoint;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MTMapPOIItem
 

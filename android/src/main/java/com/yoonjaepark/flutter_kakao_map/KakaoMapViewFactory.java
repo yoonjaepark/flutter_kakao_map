@@ -59,21 +59,11 @@ public class KakaoMapViewFactory extends PlatformViewFactory {
         Convert.interpretKakaoMapOptions(params.get("options"), builder);
         if (params.containsKey("initialCameraPosition")) {
             CameraPosition position = Convert.toCameraPosition(params.get("initialCameraPosition"));
-            Log.d("initialCameraPosition", position.toString());
             builder.setInitialCameraPosition(position);
         }
-//        if (params.containsKey("markersToAdd")) {
-//            builder.setInitialMarkers(params.get("markersToAdd"));
-//        }
-//        if (params.containsKey("polygonsToAdd")) {
-//            builder.setInitialPolygons(params.get("polygonsToAdd"));
-//        }
-//        if (params.containsKey("polylinesToAdd")) {
-//            builder.setInitialPolylines(params.get("polylinesToAdd"));
-//        }
-//        if (params.containsKey("circlesToAdd")) {
-//            builder.setInitialCircles(params.get("circlesToAdd"));
-//        }
+        if (params.containsKey("markersToAdd")) {
+            builder.setInitialMarkers(params.get("markersToAdd"));
+        }
         return builder.build(
                 id,
                 context,

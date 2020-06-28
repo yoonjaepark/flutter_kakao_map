@@ -15,7 +15,7 @@ import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
 import 'package:flutter_kakao_map/src/method_channel/method_channel_kakao_maps_flutter.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-/// The interface that platform-specific implementations of `google_maps_flutter` must extend.
+/// The interface that platform-specific implementations of `kakao_maps_flutter` must extend.
 ///
 /// Avoid `implements` of this interface. Using `implements` makes adding any new
 /// methods here a breaking change for end users of your platform!

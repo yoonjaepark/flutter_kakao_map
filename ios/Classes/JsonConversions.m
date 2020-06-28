@@ -30,34 +30,4 @@
                            alpha:((float)((value & 0xFF000000) >> 24)) / 255.0];
 }
 
-//+ (CLLocationCoordinate2D)toLocation:(NSArray*)data {
-//  return CLLocationCoordinate2DMake([KakaoMapJsonConversions toDouble:data[0]],
-//                                    [KakaoMapJsonConversions toDouble:data[1]]);
-//}
-//
-//+ (CGPoint)toPoint:(NSArray*)data {
-//  return CGPointMake([FLTGoogleMapJsonConversions toDouble:data[0]],
-//                     [FLTGoogleMapJsonConversions toDouble:data[1]]);
-//}
-//
-//+ (NSArray*)positionToJson:(CLLocationCoordinate2D)position {
-//  return @[ @(position.latitude), @(position.longitude) ];
-//}
-//
-//
-//
-//+ (NSArray<CLLocation*>*)toPoints:(NSArray*)data {
-//  NSMutableArray* points = [[NSMutableArray alloc] init];
-//  for (unsigned i = 0; i < [data count]; i++) {
-//    NSNumber* latitude = data[i][0];
-//    NSNumber* longitude = data[i][1];
-//    CLLocation* point =
-//        [[CLLocation alloc] initWithLatitude:[FLTGoogleMapJsonConversions toDouble:latitude]
-//                                   longitude:[FLTGoogleMapJsonConversions toDouble:longitude]];
-//    [points addObject:point];
-//  }
-//
-//  return points;
-//}
-
 @end

@@ -12,8 +12,4 @@
 + (double)toDouble:(NSNumber*)data;
 + (float)toFloat:(NSNumber*)data;
 + (UIColor*)toColor:(NSNumber*)data;
-//+ (CLLocationCoordinate2D)toLocation:(NSArray*)data;
-//+ (CGPoint)toPoint:(NSArray*)data;
-//+ (NSArray*)positionToJson:(CLLocationCoordinate2D)position;
-//+ (NSArray<CLLocation*>*)toPoints:(NSArray*)data;
 @end

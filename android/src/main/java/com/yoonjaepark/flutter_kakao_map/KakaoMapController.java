@@ -37,6 +37,8 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapView;
 
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -62,11 +64,8 @@ public class KakaoMapController
         implements Application.ActivityLifecycleCallbacks,
         DefaultLifecycleObserver,
         ActivityPluginBinding.OnSaveInstanceStateListener,
-//        GoogleMapOptionsSink,
         KakaoMapOptionsSink,
         MethodChannel.MethodCallHandler,
-//        OnMapReadyCallback,
-//        GoogleMapListener,
         KakaoMapListener,
         PlatformView {
 
@@ -88,18 +87,15 @@ public class KakaoMapController
     private boolean disposed = false;
     private final float density;
     private MethodChannel.Result mapReadyResult;
-    private final int activityHashCode; // Do not use directly, use getActivityHashCode() instead to get correct hashCode for both v1 and v2 embedding.
+    private final int activityHashCode;
     private final Lifecycle lifecycle;
     private final Context context;
-    private final Application mApplication; // Do not use direclty, use getApplication() instead to get correct application object for both v1 and v2 embedding.
+    private final Application mApplication;
     private final PluginRegistry.Registrar registrar; // For v1 embedding only.
     private double lat;
     private double lan;
     private int zoomLevel;
-//    private final MarkersController markersController;
-//    private final PolygonsController polygonsController;
-//    private final PolylinesController polylinesController;
-//    private final CirclesController circlesController;
+    private final MarkersController markersController;
     private List<Object> initialMarkers;
     private List<Object> initialPolygons;
     private List<Object> initialPolylines;
@@ -127,7 +123,6 @@ public class KakaoMapController
 
         this.mapView = new MapView(activity);
         this.surfaceHolder = mapView.getHolder();
-//        surfaceHolder.setFormat(PixelFormat.TRANSPARENT);
 
         this.density = context.getResources().getDisplayMetrics().density;
         methodChannel = new MethodChannel(binaryMessenger, "plugins.flutter.io/kakao_maps_" + id);
@@ -139,16 +134,8 @@ public class KakaoMapController
         this.activity = activity;
         setKakaoMapListener(this);
         this.getHashKey(context);
-//        this.mapView.onInitializeAccessibilityEvent();
-//        this.frameLayout = new FrameLayout(context);
-//        this.frameLayout.addView(this.mapView);
-//        surfaceHolder.addCallback(surfaceListener);
 
-//        this.markersController = new MarkersController(methodChannel);
-//        this.polygonsController = new PolygonsController(methodChannel, density);
-//        this.polylinesController = new PolylinesController(methodChannel, density);
-//        this.circlesController = new CirclesController(methodChannel, density);
-
+        this.markersController = new MarkersController(methodChannel);
     }
 
     private void getHashKey(Context context){
@@ -191,32 +178,16 @@ public class KakaoMapController
     void init() {
         switch (activityState.get()) {
             case STOPPED:
-//                mapView.onCreate(null);
-//                mapView.onStart();
-//                mapView.onResume();
-//                mapView.onPause();
-//                mapView.onStop();
                 break;
             case PAUSED:
-//                mapView.onCreate(null);
-//                mapView.onStart();
-//                mapView.onResume();
-//                mapView.onPause();
                 break;
             case RESUMED:
-//                mapView.onCreate(null);
-//                mapView.onStart();
-//                mapView.onResume();
                 break;
             case STARTED:
-//                mapView.onCreate(null);
-//                mapView.onStart();
                 break;
             case CREATED:
-//                mapView.onCreate(null);
                 break;
             case DESTROYED:
-                // Nothing to do, the activity has been completely destroyed.
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -227,47 +198,11 @@ public class KakaoMapController
         } else {
             getApplication().registerActivityLifecycleCallbacks(this);
         }
-//        mapView.getMapAsync(this);
     }
 
     private void moveCamera(CameraUpdate cameraUpdate) {
         mapView.moveCamera(cameraUpdate);
     }
-
-//    private void moveCamera(CameraUpdate cameraUpdate) {
-//        googleMap.moveCamera(cameraUpdate);
-//    }
-//
-//    private void animateCamera(CameraUpdate cameraUpdate) {
-//        googleMap.animateCamera(cameraUpdate);
-//    }
-//
-//    private CameraPosition getCameraPosition() {
-//        return trackCameraPosition ? googleMap.getCameraPosition() : null;
-//    }
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        this.googleMap = googleMap;
-//        this.googleMap.setIndoorEnabled(this.indoorEnabled);
-//        this.googleMap.setTrafficEnabled(this.trafficEnabled);
-//        this.googleMap.setBuildingsEnabled(this.buildingsEnabled);
-//        googleMap.setOnInfoWindowClickListener(this);
-//        if (mapReadyResult != null) {
-//            mapReadyResult.success(null);
-//            mapReadyResult = null;
-//        }
-//        setGoogleMapListener(this);
-//        updateMyLocationSettings();
-//        markersController.setGoogleMap(googleMap);
-//        polygonsController.setGoogleMap(googleMap);
-//        polylinesController.setGoogleMap(googleMap);
-//        circlesController.setGoogleMap(googleMap);
-//        updateInitialMarkers();
-//        updateInitialPolygons();
-//        updateInitialPolylines();
-//        updateInitialCircles();
-//    }
 
     @Override
     public void onMethodCall(MethodCall call, MethodChannel.Result result) {
@@ -282,8 +217,6 @@ public class KakaoMapController
             case "map#update":
             {
                 Convert.interpretKakaoMapOptions(call.argument("options"), this);
-//                Convert.interpretGoogleMapOptions(call.argument("options"), this);
-//                result.success(Convert.cameraPositionToJson(getCameraPosition()));
                 break;
             }
             case "map#clearMapTilePersistentCache":
@@ -302,63 +235,14 @@ public class KakaoMapController
             }
             case "map#getMapCenterPoint":
             {
+                Log.d("TEST", mapView.toString());
                 if (mapView != null) {
-                    Point point = Convert.toPoint(call.arguments);
                     MapPoint latLng = mapView.getMapCenterPoint();
                     result.success(Convert.mapPointToJson(latLng));
                 } else {
                     result.error(
                             "KakaoMap uninitialized", "getMapCenterPoint called prior to map initialization", null);
                 }
-                break;
-            }
-            case "map#getVisibleRegion":
-            {
-//                if (googleMap != null) {
-//                    LatLngBounds latLngBounds = googleMap.getProjection().getVisibleRegion().latLngBounds;
-//                    result.success(Convert.latlngBoundsToJson(latLngBounds));
-//                } else {
-//                    result.error(
-//                            "GoogleMap uninitialized",
-//                            "getVisibleRegion called prior to map initialization",
-//                            null);
-//                }
-                break;
-            }
-            case "map#getMapPointScreenLocation":
-            {
-                if (mapView != null) {
-                }
-//                if (googleMap != null) {
-//                    LatLng latLng = Convert.toLatLng(call.arguments);
-//                    Point screenLocation = googleMap.getProjection().toScreenLocation(latLng);
-//                    result.success(Convert.pointToJson(screenLocation));
-//                } else {
-//                    result.error(
-//                            "GoogleMap uninitialized",
-//                            "getScreenCoordinate called prior to map initialization",
-//                            null);
-//                }
-                break;
-            }
-            case "map#takeSnapshot":
-            {
-//                if (googleMap != null) {
-//                    final MethodChannel.Result _result = result;
-//                    googleMap.snapshot(
-//                            new SnapshotReadyCallback() {
-//                                @Override
-//                                public void onSnapshotReady(Bitmap bitmap) {
-//                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                                    byte[] byteArray = stream.toByteArray();
-//                                    bitmap.recycle();
-//                                    _result.success(byteArray);
-//                                }
-//                            });
-//                } else {
-//                    result.error("GoogleMap uninitialized", "takeSnapshot", null);
-//                }
                 break;
             }
             case "camera#move":
@@ -371,131 +255,76 @@ public class KakaoMapController
             case "camera#animate":
             {
                 this.animate = true;
-//                final CameraUpdate cameraUpdate =
-//                        Convert.toCameraUpdate(call.argument("cameraUpdate"), density);
-//                animateCamera(cameraUpdate);
                 result.success(null);
                 break;
             }
             case "markers#update":
             {
-//                Object markersToAdd = call.argument("markersToAdd");
-//                markersController.addMarkers((List<Object>) markersToAdd);
-//                Object markersToChange = call.argument("markersToChange");
-//                markersController.changeMarkers((List<Object>) markersToChange);
-//                Object markerIdsToRemove = call.argument("markerIdsToRemove");
-//                markersController.removeMarkers((List<Object>) markerIdsToRemove);
+                Object markersToAdd = call.argument("markersToAdd");
+                markersController.addMarkers((List<Object>) markersToAdd);
+                Object markersToChange = call.argument("markersToChange");
+                markersController.changeMarkers((List<Object>) markersToChange);
+                Object markerIdsToRemove = call.argument("markerIdsToRemove");
+                markersController.removeMarkers((List<Object>) markerIdsToRemove);
                 result.success(null);
                 break;
             }
             case "markers#showInfoWindow":
             {
-//                Object markerId = call.argument("markerId");
-//                markersController.showMarkerInfoWindow((String) markerId, result);
                 break;
             }
             case "markers#hideInfoWindow":
             {
-//                Object markerId = call.argument("markerId");
-//                markersController.hideMarkerInfoWindow((String) markerId, result);
                 break;
             }
             case "markers#isInfoWindowShown":
             {
-//                Object markerId = call.argument("markerId");
-//                markersController.isInfoWindowShown((String) markerId, result);
-                break;
-            }
-            case "polygons#update":
-            {
-//                Object polygonsToAdd = call.argument("polygonsToAdd");
-//                polygonsController.addPolygons((List<Object>) polygonsToAdd);
-//                Object polygonsToChange = call.argument("polygonsToChange");
-//                polygonsController.changePolygons((List<Object>) polygonsToChange);
-//                Object polygonIdsToRemove = call.argument("polygonIdsToRemove");
-//                polygonsController.removePolygons((List<Object>) polygonIdsToRemove);
-                result.success(null);
-                break;
-            }
-            case "polylines#update":
-            {
-//                Object polylinesToAdd = call.argument("polylinesToAdd");
-//                polylinesController.addPolylines((List<Object>) polylinesToAdd);
-//                Object polylinesToChange = call.argument("polylinesToChange");
-//                polylinesController.changePolylines((List<Object>) polylinesToChange);
-//                Object polylineIdsToRemove = call.argument("polylineIdsToRemove");
-//                polylinesController.removePolylines((List<Object>) polylineIdsToRemove);
-                result.success(null);
                 break;
             }
             case "circles#update":
             {
-//                Object circlesToAdd = call.argument("circlesToAdd");
-//                circlesController.addCircles((List<Object>) circlesToAdd);
-//                Object circlesToChange = call.argument("circlesToChange");
-//                circlesController.changeCircles((List<Object>) circlesToChange);
-//                Object circleIdsToRemove = call.argument("circleIdsToRemove");
-//                circlesController.removeCircles((List<Object>) circleIdsToRemove);
                 result.success(null);
                 break;
             }
             case "map#isCompassEnabled":
             {
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading);
-//                result.success(googleMap.getUiSettings().isCompassEnabled());
-                break;
-            }
-            case "map#isMapToolbarEnabled":
-            {
-//                result.success(mapView.t);
                 break;
             }
             case "map#getMinMaxZoomLevels":
             {
-//                List<Float> zoomLevels = new ArrayList<>(2);
-//                zoomLevels.add(googleMap.getMinZoomLevel());
-//                zoomLevels.add(googleMap.getMaxZoomLevel());
-//                result.success(zoomLevels);
                 break;
             }
             case "map#isZoomGesturesEnabled":
             {
-//                result.success(mapView.);
                 break;
             }
             case "map#isZoomControlsEnabled":
             {
-//                result.success(googleMap.getUiSettings().isZoomControlsEnabled());
                 break;
             }
             case "map#isScrollGesturesEnabled":
             {
-//                result.success(googleMap.getUiSettings().isScrollGesturesEnabled());
                 break;
             }
             case "map#isTiltGesturesEnabled":
             {
-//                result.success(googleMap.getUiSettings().isTiltGesturesEnabled());
                 break;
             }
             case "map#isRotateGesturesEnabled":
             {
-//                result.success(googleMap.getUiSettings().isRotateGesturesEnabled());
                 break;
             }
             case "map#isMyLocationButtonEnabled":
             {
-//                result.success(googleMap.getUiSettings().isMyLocationButtonEnabled());
                 break;
             }
             case "map#isTrafficEnabled":
             {
-//                result.success(googleMap.isTrafficEnabled());
                 break;
             }
             case "map#isBuildingsEnabled":
             {
-//                result.success(googleMap.isBuildingsEnabled());
                 break;
             }
             case "map#getZoomLevel":
@@ -505,20 +334,6 @@ public class KakaoMapController
             }
             case "map#setStyle":
             {
-//                String mapStyle = (String) call.arguments;
-//                boolean mapStyleSet;
-//                if (mapStyle == null) {
-//                    mapStyleSet = googleMap.setMapStyle(null);
-//                } else {
-//                    mapStyleSet = googleMap.setMapStyle(new MapStyleOptions(mapStyle));
-//                }
-//                ArrayList<Object> mapStyleResult = new ArrayList<>(2);
-//                mapStyleResult.add(mapStyleSet);
-//                if (!mapStyleSet) {
-//                    mapStyleResult.add(
-//                            "Unable to set the map style. Please check console logs for errors.");
-//                }
-//                result.success(mapStyleResult);
                 break;
             }
             default:
@@ -533,16 +348,9 @@ public class KakaoMapController
         }
         disposed = true;
         methodChannel.setMethodCallHandler(null);
-//        setGoogleMapListener(null);
         setKakaoMapListener(null);
         getApplication().unregisterActivityLifecycleCallbacks(this);
     }
-
-//    interface KakaoMapListener
-//            extends MapView.CurrentLocationEventListener,
-//            MapView.MapViewEventListener,
-//            MapView.OpenAPIKeyAuthenticationResultListener,
-//            MapView.POIItemEventListener {}
 
 
     private void setKakaoMapListener(@Nullable KakaoMapListener listener) {
@@ -551,19 +359,6 @@ public class KakaoMapController
         mapView.setOpenAPIKeyAuthenticationResultListener(listener);
         mapView.setPOIItemEventListener(listener);
     }
-
-//    private void setGoogleMapListener(@Nullable GoogleMapListener listener) {
-//        googleMap.setOnCameraMoveStartedListener(listener);
-//        googleMap.setOnCameraMoveListener(listener);
-//        googleMap.setOnCameraIdleListener(listener);
-//        googleMap.setOnMarkerClickListener(listener);
-//        googleMap.setOnMarkerDragListener(listener);
-//        googleMap.setOnPolygonClickListener(listener);
-//        googleMap.setOnPolylineClickListener(listener);
-//        googleMap.setOnCircleClickListener(listener);
-//        googleMap.setOnMapClickListener(listener);
-//        googleMap.setOnMapLongClickListener(listener);
-//    }
 
     // @Override
     // The minimum supported version of Flutter doesn't have this method on the PlatformView interface, but the maximum
@@ -585,7 +380,6 @@ public class KakaoMapController
         if (disposed || activity.hashCode() != getActivityHashCode()) {
             return;
         }
-//        mapView.onCreate(savedInstanceState);
     }
 
     @Override
@@ -593,7 +387,6 @@ public class KakaoMapController
         if (disposed || activity.hashCode() != getActivityHashCode()) {
             return;
         }
-//        mapView.onStart();
     }
 
     @Override
@@ -617,7 +410,6 @@ public class KakaoMapController
         if (disposed || activity.hashCode() != getActivityHashCode()) {
             return;
         }
-//        mapView.onStop();
     }
 
     @Override
@@ -625,7 +417,6 @@ public class KakaoMapController
         if (disposed || activity.hashCode() != getActivityHashCode()) {
             return;
         }
-//        mapView.onSaveInstanceState(outState);
     }
 
     @Override
@@ -633,7 +424,6 @@ public class KakaoMapController
         if (disposed || activity.hashCode() != getActivityHashCode()) {
             return;
         }
-//        mapView.onDestroy();
     }
 
     // DefaultLifecycleObserver and OnSaveInstanceStateListener
@@ -643,7 +433,6 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onCreate(null);
     }
 
     @Override
@@ -651,7 +440,6 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onStart();
     }
 
     @Override
@@ -675,7 +463,6 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onStop();
     }
 
     @Override
@@ -683,7 +470,6 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onDestroy();
     }
 
     @Override
@@ -691,7 +477,6 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onCreate(bundle);
     }
 
     @Override
@@ -699,157 +484,10 @@ public class KakaoMapController
         if (disposed) {
             return;
         }
-//        mapView.onSaveInstanceState(bundle);
     }
 
-    // GoogleMapOptionsSink methods
-
-//    @Override
-//    public void setCameraTargetBounds(LatLngBounds bounds) {
-//        googleMap.setLatLngBoundsForCameraTarget(bounds);
-//    }
-//
-//    @Override
-//    public void setCompassEnabled(boolean compassEnabled) {
-//        googleMap.getUiSettings().setCompassEnabled(compassEnabled);
-//    }
-//
-//    @Override
-//    public void setMapToolbarEnabled(boolean mapToolbarEnabled) {
-//        googleMap.getUiSettings().setMapToolbarEnabled(mapToolbarEnabled);
-//    }
-//
-//    @Override
-//    public void setMapType(int mapType) {
-//        googleMap.setMapType(mapType);
-//    }
-//
-//    @Override
-//    public void setTrackCameraPosition(boolean trackCameraPosition) {
-//        this.trackCameraPosition = trackCameraPosition;
-//    }
-//
-//    @Override
-//    public void setRotateGesturesEnabled(boolean rotateGesturesEnabled) {
-//        googleMap.getUiSettings().setRotateGesturesEnabled(rotateGesturesEnabled);
-//    }
-//
-//    @Override
-//    public void setScrollGesturesEnabled(boolean scrollGesturesEnabled) {
-//        googleMap.getUiSettings().setScrollGesturesEnabled(scrollGesturesEnabled);
-//    }
-//
-//    @Override
-//    public void setTiltGesturesEnabled(boolean tiltGesturesEnabled) {
-//        googleMap.getUiSettings().setTiltGesturesEnabled(tiltGesturesEnabled);
-//    }
-//
-//    @Override
-//    public void setMinMaxZoomPreference(Float min, Float max) {
-//        googleMap.resetMinMaxZoomPreference();
-//        if (min != null) {
-//            googleMap.setMinZoomPreference(min);
-//        }
-//        if (max != null) {
-//            googleMap.setMaxZoomPreference(max);
-//        }
-//    }
-//
-//    @Override
-//    public void setPadding(float top, float left, float bottom, float right) {
-//        if (googleMap != null) {
-//            googleMap.setPadding(
-//                    (int) (left * density),
-//                    (int) (top * density),
-//                    (int) (right * density),
-//                    (int) (bottom * density));
-//        }
-//    }
-//
-//    @Override
-//    public void setZoomGesturesEnabled(boolean zoomGesturesEnabled) {
-//        googleMap.getUiSettings().setZoomGesturesEnabled(zoomGesturesEnabled);
-//    }
-//
-//    @Override
-//    public void setMyLocationEnabled(boolean myLocationEnabled) {
-//        if (this.myLocationEnabled == myLocationEnabled) {
-//            return;
-//        }
-//        this.myLocationEnabled = myLocationEnabled;
-//        if (googleMap != null) {
-//            updateMyLocationSettings();
-//        }
-//    }
-//
-//    @Override
-//    public void setMyLocationButtonEnabled(boolean myLocationButtonEnabled) {
-//        if (this.myLocationButtonEnabled == myLocationButtonEnabled) {
-//            return;
-//        }
-//        this.myLocationButtonEnabled = myLocationButtonEnabled;
-//        if (googleMap != null) {
-//            updateMyLocationSettings();
-//        }
-//    }
-//
-//    @Override
-//    public void setZoomControlsEnabled(boolean zoomControlsEnabled) {
-//        if (this.zoomControlsEnabled == zoomControlsEnabled) {
-//            return;
-//        }
-//        this.zoomControlsEnabled = zoomControlsEnabled;
-//        if (googleMap != null) {
-//            googleMap.getUiSettings().setZoomControlsEnabled(zoomControlsEnabled);
-//        }
-//    }
-//
-//    @Override
-//    public void setInitialMarkers(Object initialMarkers) {
-//        this.initialMarkers = (List<Object>) initialMarkers;
-//        if (googleMap != null) {
-//            updateInitialMarkers();
-//        }
-//    }
-//
-//    private void updateInitialMarkers() {
-//        markersController.addMarkers(initialMarkers);
-//    }
-//
-//    @Override
-//    public void setInitialPolygons(Object initialPolygons) {
-//        this.initialPolygons = (List<Object>) initialPolygons;
-//        if (googleMap != null) {
-//            updateInitialPolygons();
-//        }
-//    }
-//
-//    private void updateInitialPolygons() {
-//        polygonsController.addPolygons(initialPolygons);
-//    }
-//
-//    @Override
-//    public void setInitialPolylines(Object initialPolylines) {
-//        this.initialPolylines = (List<Object>) initialPolylines;
-//        if (googleMap != null) {
-//            updateInitialPolylines();
-//        }
-//    }
-//
-//    private void updateInitialPolylines() {
-//        polylinesController.addPolylines(initialPolylines);
-//    }
-//
-//    @Override
-//    public void setInitialCircles(Object initialCircles) {
-//        this.initialCircles = (List<Object>) initialCircles;
-//        if (googleMap != null) {
-//            updateInitialCircles();
-//        }
-//    }
-
-    private void updateInitialCircles() {
-//        circlesController.addCircles(initialCircles);
+    private void updateInitialMarkers() {
+        markersController.addMarkers(initialMarkers);
     }
 
     @SuppressLint("MissingPermission")
@@ -860,8 +498,6 @@ public class KakaoMapController
             // Gradle is doing a static check for missing permission and in some configurations will
             // fail the build if the permission is missing. The following disables the Gradle lint.
             //noinspection ResourceType
-//            googleMap.setMyLocationEnabled(myLocationEnabled);
-//            googleMap.getUiSettings().setMyLocationButtonEnabled(myLocationButtonEnabled);
         } else {
             // TODO(amirh): Make the options update fail.
             // https://github.com/flutter/flutter/issues/24327
@@ -928,12 +564,10 @@ public class KakaoMapController
     @Override
     public void setCurrentLocationTrackingMode(int currentLocationTrackingMode) {
         MapView.CurrentLocationTrackingMode[] trackingModes = MapView.CurrentLocationTrackingMode.values();
-//        mapView.setCurrentLocationTrackingMode(trackingModes[currentLocationTrackingMode]);
         MapView.CurrentLocationTrackingMode trackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff;
         mapView.setShowCurrentLocationMarker(true);
         if (currentLocationTrackingMode == 0) {
             trackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff;
-            // mapView.setShowCurrentLocationMarker(false);
         } else if (currentLocationTrackingMode == 1) {
             trackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading;
         } else if (currentLocationTrackingMode == 2) {
@@ -1012,11 +646,6 @@ public class KakaoMapController
     }
 
     public void setTrafficEnabled(boolean trafficEnabled) {
-//        this.trafficEnabled = trafficEnabled;
-//        if (mapView == null) {
-//            return;
-//        }
-//        mapView.setTrafficEnabled(trafficEnabled);
     }
 
     public void setBuildingsEnabled(boolean buildingsEnabled) {
@@ -1025,7 +654,10 @@ public class KakaoMapController
 
     @Override
     public void setInitialMarkers(Object initialMarkers) {
-
+        this.initialMarkers = (List<Object>) initialMarkers;
+        if (mapView != null) {
+            updateInitialMarkers();
+        }
     }
 
     @Override
@@ -1079,7 +711,6 @@ public class KakaoMapController
     @Override
     public void onMapViewInitialized(MapView mapView) {
 //        mapView.setMapCenterPoint(this.let);
-        mapView.setMapCenterPointAndZoomLevel(this.options.initialCameraPosition.target, 3, true);
     }
 
     @Override
@@ -1104,7 +735,9 @@ public class KakaoMapController
 
     @Override
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
-
+        final Map<String, Object> arguments = new HashMap<>(2);
+        arguments.put("position", Convert.mapPointToJson(mapPoint));
+        methodChannel.invokeMethod("map#onTap", arguments);
     }
 
     @Override
@@ -1114,7 +747,9 @@ public class KakaoMapController
 
     @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
-
+        final Map<String, Object> arguments = new HashMap<>(2);
+        arguments.put("position", Convert.mapPointToJson(mapPoint));
+        methodChannel.invokeMethod("map#onLongPress", arguments);
     }
 
     @Override
@@ -1134,12 +769,13 @@ public class KakaoMapController
 
     @Override
     public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int i, String s) {
-
+        mapView.setMapCenterPointAndZoomLevel(this.options.initialCameraPosition.target, 3, true);
+        markersController.setKakaoMap(mapView);
     }
 
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
+        markersController.onMarkerTap(mapPOIItem.getUserObject().toString());
     }
 
     @Override
@@ -1163,17 +799,3 @@ interface KakaoMapListener
         MapView.MapViewEventListener,
         MapView.OpenAPIKeyAuthenticationResultListener,
         MapView.POIItemEventListener {}
-
-
-//interface GoogleMapListener
-//        extends GoogleMap.OnCameraIdleListener,
-//        GoogleMap.OnCameraMoveListener,
-//        GoogleMap.OnCameraMoveStartedListener,
-//        GoogleMap.OnInfoWindowClickListener,
-//        GoogleMap.OnMarkerClickListener,
-//        GoogleMap.OnPolygonClickListener,
-//        GoogleMap.OnPolylineClickListener,
-//        GoogleMap.OnCircleClickListener,
-//        GoogleMap.OnMapClickListener,
-//        GoogleMap.OnMapLongClickListener,
-//        GoogleMap.OnMarkerDragListener {}

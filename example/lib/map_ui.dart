@@ -36,7 +36,7 @@ class MapUiBodyState extends State<MapUiBody> {
   MapUiBodyState();
 
   static final CameraPosition _kInitialPosition = const CameraPosition(
-    target: MapPoint(-33.852, 151.211),
+    target: MapPoint(37.5087553, 127.0632877),
     zoom: 11.0,
   );
 

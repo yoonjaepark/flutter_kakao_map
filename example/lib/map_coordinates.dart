@@ -32,8 +32,9 @@ class _MapCoordinatesBody extends StatefulWidget {
 class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
   _MapCoordinatesBodyState();
 
-  KakaoMapController mapController;
+  KakaoMapController _controller;
   MapPoint _visibleRegion = MapPoint(37.5087553, 127.0632877);
+  bool _isMapCreated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
       ),
     ];
 
-    if (mapController != null) {
+    if (_isMapCreated != null) {
       final String currentVisibleRegion = 'VisibleRegion:'
           '\nnortheast: ${_visibleRegion.latitude},'
           '\nsouthwest: ${_visibleRegion.longitude}';
@@ -70,11 +71,10 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
     );
   }
 
-  void onMapCreated(KakaoMapController controller) async {
-    final MapPoint visibleRegion = await controller.getMapCenterPoint();
+    void onMapCreated(KakaoMapController controller) {
     setState(() {
-      mapController = controller;
-      _visibleRegion = visibleRegion;
+      _controller = controller;
+      _isMapCreated = true;
     });
   }
 
@@ -85,7 +85,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
         child: const Text('Get Map Center Point'),
         onPressed: () async {
           final MapPoint visibleRegion =
-              await mapController.getMapCenterPoint();
+              await _controller.getMapCenterPoint();
           setState(() {
             _visibleRegion = visibleRegion;
           });

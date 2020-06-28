@@ -11,7 +11,7 @@ import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
 import 'page.dart';
 
 const CameraPosition _kInitialPosition =
-    CameraPosition(target: MapPoint(-33.852, 151.211), zoom: 11.0);
+    CameraPosition(target: MapPoint(37.5087553, 127.0632877), zoom: 11.0);
 
 class MapClickPage extends KakaoMapExampleAppPage {
   MapClickPage() : super(const Icon(Icons.mouse), 'Map click');

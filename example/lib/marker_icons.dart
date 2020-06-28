@@ -27,7 +27,7 @@ class MarkerIconsBody extends StatefulWidget {
   State<StatefulWidget> createState() => MarkerIconsBodyState();
 }
 
-const MapPoint _kMapCenter = MapPoint(52.4478, -3.5402);
+const MapPoint _kMapCenter = MapPoint(37.5087553, 127.0632877);
 
 class MarkerIconsBodyState extends State<MarkerIconsBody> {
   KakaoMapController controller;

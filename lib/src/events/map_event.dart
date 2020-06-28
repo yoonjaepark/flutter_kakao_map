@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
-// import 'package:google_maps_flutter_platform_interface/src/method_channel/method_channel_google_maps_flutter.dart';
 import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
 import 'package:flutter_kakao_map/src/platform_interface/kakao_maps_flutter_platform.dart';
 import 'package:flutter_kakao_map/src/method_channel/method_channel_kakao_maps_flutter.dart';

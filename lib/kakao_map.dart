@@ -10,9 +10,9 @@ part of flutter_kakao_map;
 /// map is created.
 typedef void MapCreatedCallback(KakaoMapController controller);
 
-/// A widget which displays a map with data obtained from the Google Maps service.
+/// A widget which displays a map with data obtained from the Kakao Maps service.
 class KakaoMap extends StatefulWidget {
-  /// Creates a widget displaying data from Google Maps services.
+  /// Creates a widget displaying data from Kakao Maps services.
   ///
   /// [AssertionError] will be thrown if [initialCameraPosition] is null;
   const KakaoMap({

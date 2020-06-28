@@ -130,15 +130,11 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
   }
 
   Future<dynamic> _handleMethodCall(MethodCall call, int mapId) async {
-    print("call.arguments['position']");
-    print(call.arguments['position']);
     switch (call.method) {
       case 'camera#onMoveStarted':
         _mapEventStreamController.add(CameraMoveStartedEvent(mapId));
         break;
       case 'camera#onCurrentLocationUpdate':
-        print("camera#onCurrentLocationUpdate");
-        print(mapId);
         _mapEventStreamController.add(CameraCurrentLocationEvent(
           mapId,
           CameraPosition(
@@ -147,8 +143,6 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
         ));
         break;
       case 'camera#onMove':
-        print("camera#onMove");
-        print(mapId);
         _mapEventStreamController.add(CameraMoveEvent(
           mapId,
           CameraPosition(
@@ -160,15 +154,13 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
         _mapEventStreamController.add(CameraIdleEvent(mapId));
         break;
       case 'marker#onTap':
+        print('');
         _mapEventStreamController.add(MarkerTapEvent(
           mapId,
           MarkerId(call.arguments['markerId']),
         ));
         break;
       case 'marker#onMarkerSelect':
-        print("marker#onMarkerSelect");
-        print(call.arguments);
-        // print(MarkerTag(call.arguments['markerId']));
         _mapEventStreamController.add(MarkerSelectEvent(
           mapId,
           MarkerTag(target: MapPoint(call.arguments['target'][0],
