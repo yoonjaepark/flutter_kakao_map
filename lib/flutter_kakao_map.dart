@@ -27,8 +27,6 @@ export 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart'
     CameraTargetBounds,
     CameraUpdate,
     Cap,
-    Circle,
-    CircleId,
     InfoWindow,
     JointType,
     LatLng,
@@ -40,10 +38,6 @@ export 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart'
     MarkerId,
     MinMaxZoomPreference,
     PatternItem,
-    Polygon,
-    PolygonId,
-    Polyline,
-    PolylineId,
     ScreenCoordinate;
 
 part 'controller.dart';

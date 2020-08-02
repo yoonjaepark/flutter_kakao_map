@@ -124,30 +124,6 @@ class MarkerDragEndEvent extends _PositionedMapEvent<MarkerId> {
       : super(mapId, position, markerId);
 }
 
-/// An event fired when a [Polyline] is tapped.
-class PolylineTapEvent extends MapEvent<PolylineId> {
-  /// Build an PolylineTap Event triggered from the map represented by `mapId`.
-  ///
-  /// The `value` of this event is a [PolylineId] object that represents the tapped Polyline.
-  PolylineTapEvent(int mapId, PolylineId polylineId) : super(mapId, polylineId);
-}
-
-/// An event fired when a [Polygon] is tapped.
-class PolygonTapEvent extends MapEvent<PolygonId> {
-  /// Build an PolygonTap Event triggered from the map represented by `mapId`.
-  ///
-  /// The `value` of this event is a [PolygonId] object that represents the tapped Polygon.
-  PolygonTapEvent(int mapId, PolygonId polygonId) : super(mapId, polygonId);
-}
-
-/// An event fired when a [Circle] is tapped.
-class CircleTapEvent extends MapEvent<CircleId> {
-  /// Build an CircleTap Event triggered from the map represented by `mapId`.
-  ///
-  /// The `value` of this event is a [CircleId] object that represents the tapped Circle.
-  CircleTapEvent(int mapId, CircleId circleId) : super(mapId, circleId);
-}
-
 /// An event fired when a Map is tapped.
 class MapTapEvent extends _PositionedMapEvent<void> {
   /// Build an MapTap Event triggered from the map represented by `mapId`.

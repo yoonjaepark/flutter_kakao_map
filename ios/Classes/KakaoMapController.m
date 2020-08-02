@@ -180,9 +180,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
     } else if ([call.method isEqualToString:@"markers#showInfoWindow"]) {
     } else if ([call.method isEqualToString:@"markers#hideInfoWindow"]) {
     } else if ([call.method isEqualToString:@"markers#isInfoWindowShown"]) {
-    } else if ([call.method isEqualToString:@"polygons#update"]) {
-    } else if ([call.method isEqualToString:@"polylines#update"]) {
-    } else if ([call.method isEqualToString:@"circles#update"]) {
     } else if ([call.method isEqualToString:@"map#isCompassEnabled"]) {
     } else if ([call.method isEqualToString:@"map#isMapToolbarEnabled"]) {
     } else if ([call.method isEqualToString:@"map#getMinMaxZoomLevels"]) {

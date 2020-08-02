@@ -10,21 +10,12 @@ export 'bitmap.dart';
 export 'callbacks.dart';
 export 'camera.dart';
 export 'cap.dart';
-export 'circle_updates.dart';
-export 'circle.dart';
 export 'joint_type.dart';
 export 'location.dart';
 export 'marker_updates.dart';
 export 'marker.dart';
 export 'pattern_item.dart';
-export 'polygon_updates.dart';
-export 'polygon.dart';
-export 'polyline_updates.dart';
-export 'polyline.dart';
 export 'screen_coordinate.dart';
 
 // Export the utils, they're used by the Widget
-export 'utils/circle.dart';
 export 'utils/marker.dart';
-export 'utils/polygon.dart';
-export 'utils/polyline.dart';

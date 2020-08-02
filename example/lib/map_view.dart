@@ -51,21 +51,8 @@ class MapViewBodyState extends State<MapViewBody> {
   CurrentLocationTrackingMode _currentLocationTrackingMode =
       CurrentLocationTrackingMode.trackingModeOff;
   bool _hDMapTileEnabled = true;
-  bool _myLocationButtonEnabled = true;
   KakaoMapController _controller;
-
-  bool _isMoving = false;
-  bool _mapToolbarEnabled = true;
-  CameraTargetBounds _cameraTargetBounds = CameraTargetBounds.unbounded;
-  MinMaxZoomPreference _minMaxZoomPreference = MinMaxZoomPreference.unbounded;
-  bool _rotateGesturesEnabled = true;
-  bool _scrollGesturesEnabled = true;
-  bool _tiltGesturesEnabled = true;
-  bool _zoomControlsEnabled = false;
-  bool _zoomGesturesEnabled = true;
-  bool _indoorViewEnabled = true;
-  bool _myTrafficEnabled = false;
-  bool _nightMode = false;
+  MapPoint _centerMapPoint = const MapPoint(0, 0);
 
   @override
   void initState() {
@@ -75,17 +62,6 @@ class MapViewBodyState extends State<MapViewBody> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  Widget _compassToggler() {
-    return FlatButton(
-      child: Text('${_compassEnabled ? 'disable' : 'enable'} compass'),
-      onPressed: () {
-        setState(() {
-          _compassEnabled = !_compassEnabled;
-        });
-      },
-    );
   }
 
   Widget _hDMapTileToggler() {
@@ -158,20 +134,11 @@ class MapViewBodyState extends State<MapViewBody> {
     return FlatButton(
       onPressed: () async {
         final MapPoint mapPoint = await _controller.getMapCenterPoint();
-      },
-      child: const Text('getMapCenterPoint'),
-    );
-  }
-
-  Widget _myLocationButtonToggler() {
-    return FlatButton(
-      child: Text(
-          '${_myLocationButtonEnabled ? 'disable' : 'enable'} my location button'),
-      onPressed: () {
         setState(() {
-          _myLocationButtonEnabled = !_myLocationButtonEnabled;
+          _centerMapPoint = mapPoint;
         });
       },
+      child: const Text('getMapCenterPoint'),
     );
   }
 
@@ -212,6 +179,7 @@ class MapViewBodyState extends State<MapViewBody> {
                   'camera target: ${_position.target.latitude.toStringAsFixed(4)},'
                   '${_position.target.longitude.toStringAsFixed(4)}'),
               Text('camera zoom: ${_position.zoom}'),
+              Text('center: ${_centerMapPoint.latitude.toStringAsFixed(4)}, ${_centerMapPoint.longitude.toStringAsFixed(4)}'),
               Text(
                   'current: ${_currenPosition.target.latitude.toStringAsFixed(4)},'
                   '${_currenPosition.target.longitude.toStringAsFixed(4)}'),
@@ -222,7 +190,6 @@ class MapViewBodyState extends State<MapViewBody> {
               _zoomOut(),
               _currentLocationTrackingModeCycler(),
               _getMapCenterPoint(),
-              _myLocationButtonToggler(),
             ],
           ),
         ),

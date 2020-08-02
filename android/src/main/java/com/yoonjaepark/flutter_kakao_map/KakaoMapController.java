@@ -133,7 +133,7 @@ public class KakaoMapController
         this.activityHashCode = registrarActivityHashCode;
         this.activity = activity;
         setKakaoMapListener(this);
-        this.getHashKey(context);
+//        this.getHashKey(context);
 
         this.markersController = new MarkersController(methodChannel);
     }

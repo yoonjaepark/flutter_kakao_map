@@ -93,15 +93,6 @@ class KakaoMapController {
     _kakaoMapsFlutterPlatform.onInfoWindowTap(mapId: mapId).listen(
         (InfoWindowTapEvent e) => _kakaoMapState.onInfoWindowTap(e.value));
     _kakaoMapsFlutterPlatform
-        .onPolylineTap(mapId: mapId)
-        .listen((PolylineTapEvent e) => _kakaoMapState.onPolylineTap(e.value));
-    _kakaoMapsFlutterPlatform
-        .onPolygonTap(mapId: mapId)
-        .listen((PolygonTapEvent e) => _kakaoMapState.onPolygonTap(e.value));
-    _kakaoMapsFlutterPlatform
-        .onCircleTap(mapId: mapId)
-        .listen((CircleTapEvent e) => _kakaoMapState.onCircleTap(e.value));
-    _kakaoMapsFlutterPlatform
         .onTap(mapId: mapId)
         .listen((MapTapEvent e) => _kakaoMapState.onTap(e.position));
     _kakaoMapsFlutterPlatform.onLongPress(mapId: mapId).listen(
@@ -129,41 +120,6 @@ class KakaoMapController {
   Future<void> _updateMarkers(MarkerUpdates markerUpdates) {
     assert(markerUpdates != null);
     return _kakaoMapsFlutterPlatform.updateMarkers(markerUpdates, mapId: mapId);
-  }
-
-  /// Updates polygon configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> _updatePolygons(PolygonUpdates polygonUpdates) {
-    assert(polygonUpdates != null);
-    return _kakaoMapsFlutterPlatform.updatePolygons(polygonUpdates,
-        mapId: mapId);
-  }
-
-  /// Updates polyline configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> _updatePolylines(PolylineUpdates polylineUpdates) {
-    assert(polylineUpdates != null);
-    return _kakaoMapsFlutterPlatform.updatePolylines(polylineUpdates,
-        mapId: mapId);
-  }
-
-  /// Updates circle configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> _updateCircles(CircleUpdates circleUpdates) {
-    assert(circleUpdates != null);
-    return _kakaoMapsFlutterPlatform.updateCircles(circleUpdates, mapId: mapId);
   }
 
   /// Starts an animated change of the map camera position.

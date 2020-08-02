@@ -105,21 +105,6 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
   }
 
   @override
-  Stream<PolylineTapEvent> onPolylineTap({@required int mapId}) {
-    return _events(mapId).whereType<PolylineTapEvent>();
-  }
-
-  @override
-  Stream<PolygonTapEvent> onPolygonTap({@required int mapId}) {
-    return _events(mapId).whereType<PolygonTapEvent>();
-  }
-
-  @override
-  Stream<CircleTapEvent> onCircleTap({@required int mapId}) {
-    return _events(mapId).whereType<CircleTapEvent>();
-  }
-
-  @override
   Stream<MapTapEvent> onTap({@required int mapId}) {
     return _events(mapId).whereType<MapTapEvent>();
   }
@@ -180,24 +165,6 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
           MarkerId(call.arguments['markerId']),
         ));
         break;
-      case 'polyline#onTap':
-        _mapEventStreamController.add(PolylineTapEvent(
-          mapId,
-          PolylineId(call.arguments['polylineId']),
-        ));
-        break;
-      case 'polygon#onTap':
-        _mapEventStreamController.add(PolygonTapEvent(
-          mapId,
-          PolygonId(call.arguments['polygonId']),
-        ));
-        break;
-      case 'circle#onTap':
-        _mapEventStreamController.add(CircleTapEvent(
-          mapId,
-          CircleId(call.arguments['circleId']),
-        ));
-        break;
       case 'map#onTap':
         _mapEventStreamController.add(MapTapEvent(
           mapId,
@@ -250,60 +217,6 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
     return channel(mapId).invokeMethod<void>(
       'markers#update',
       markerUpdates.toJson(),
-    );
-  }
-
-  /// Updates polygon configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  @override
-  Future<void> updatePolygons(
-    PolygonUpdates polygonUpdates, {
-    @required int mapId,
-  }) {
-    assert(polygonUpdates != null);
-    return channel(mapId).invokeMethod<void>(
-      'polygons#update',
-      polygonUpdates.toJson(),
-    );
-  }
-
-  /// Updates polyline configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  @override
-  Future<void> updatePolylines(
-    PolylineUpdates polylineUpdates, {
-    @required int mapId,
-  }) {
-    assert(polylineUpdates != null);
-    return channel(mapId).invokeMethod<void>(
-      'polylines#update',
-      polylineUpdates.toJson(),
-    );
-  }
-
-  /// Updates circle configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  @override
-  Future<void> updateCircles(
-    CircleUpdates circleUpdates, {
-    @required int mapId,
-  }) {
-    assert(circleUpdates != null);
-    return channel(mapId).invokeMethod<void>(
-      'circles#update',
-      circleUpdates.toJson(),
     );
   }
 

@@ -42,9 +42,6 @@ class KakaoMap extends StatefulWidget {
     this.trafficEnabled = false,
     this.buildingsEnabled = true,
     this.markers,
-    this.polygons,
-    this.polylines,
-    this.circles,
     this.onCameraMoveStarted,
     this.onCameraMove,
     this.onCurrentLocationUpdate,
@@ -109,15 +106,6 @@ class KakaoMap extends StatefulWidget {
 
   /// Markers to be placed on the map.
   final Set<Marker> markers;
-
-  /// Polygons to be placed on the map.
-  final Set<Polygon> polygons;
-
-  /// Polylines to be placed on the map.
-  final Set<Polyline> polylines;
-
-  /// Circles to be placed on the map.
-  final Set<Circle> circles;
 
   /// Called when the camera starts moving.
   ///
@@ -217,9 +205,6 @@ class _KakaoMapState extends State<KakaoMap> {
   Completer<KakaoMapController>();
 
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
-  Map<PolygonId, Polygon> _polygons = <PolygonId, Polygon>{};
-  Map<PolylineId, Polyline> _polylines = <PolylineId, Polyline>{};
-  Map<CircleId, Circle> _circles = <CircleId, Circle>{};
   _KakaoMapOptions _kakaoMapOptions;
 
   @override
@@ -228,9 +213,6 @@ class _KakaoMapState extends State<KakaoMap> {
       'initialCameraPosition': widget.initialCameraPosition?.toMap(),
       'options': _kakaoMapOptions.toMap(),
       'markersToAdd': serializeMarkerSet(widget.markers),
-      'polygonsToAdd': serializePolygonSet(widget.polygons),
-      'polylinesToAdd': serializePolylineSet(widget.polylines),
-      'circlesToAdd': serializeCircleSet(widget.circles),
     };
     return _kakaoMapsFlutterPlatform.buildView(
       creationParams,
@@ -244,9 +226,6 @@ class _KakaoMapState extends State<KakaoMap> {
     super.initState();
     _kakaoMapOptions = _KakaoMapOptions.fromWidget(widget);
     _markers = keyByMarkerId(widget.markers);
-    _polygons = keyByPolygonId(widget.polygons);
-    _polylines = keyByPolylineId(widget.polylines);
-    _circles = keyByCircleId(widget.circles);
   }
 
   @override
@@ -254,9 +233,6 @@ class _KakaoMapState extends State<KakaoMap> {
     super.didUpdateWidget(oldWidget);
     _updateOptions();
     _updateMarkers();
-    _updatePolygons();
-    _updatePolylines();
-    _updateCircles();
   }
 
   void _updateOptions() async {
@@ -278,30 +254,6 @@ class _KakaoMapState extends State<KakaoMap> {
     controller._updateMarkers(
         MarkerUpdates.from(_markers.values.toSet(), widget.markers));
     _markers = keyByMarkerId(widget.markers);
-  }
-
-  void _updatePolygons() async {
-    final KakaoMapController controller = await _controller.future;
-    // ignore: unawaited_futures
-    controller._updatePolygons(
-        PolygonUpdates.from(_polygons.values.toSet(), widget.polygons));
-    _polygons = keyByPolygonId(widget.polygons);
-  }
-
-  void _updatePolylines() async {
-    final KakaoMapController controller = await _controller.future;
-    // ignore: unawaited_futures
-    controller._updatePolylines(
-        PolylineUpdates.from(_polylines.values.toSet(), widget.polylines));
-    _polylines = keyByPolylineId(widget.polylines);
-  }
-
-  void _updateCircles() async {
-    final KakaoMapController controller = await _controller.future;
-    // ignore: unawaited_futures
-    controller._updateCircles(
-        CircleUpdates.from(_circles.values.toSet(), widget.circles));
-    _circles = keyByCircleId(widget.circles);
   }
 
   Future<void> onPlatformViewCreated(int id) async {
@@ -328,23 +280,6 @@ class _KakaoMapState extends State<KakaoMap> {
     if (_markers[markerId]?.onDragEnd != null) {
       _markers[markerId].onDragEnd(position);
     }
-  }
-
-  void onPolygonTap(PolygonId polygonId) {
-    assert(polygonId != null);
-    _polygons[polygonId].onTap();
-  }
-
-  void onPolylineTap(PolylineId polylineId) {
-    assert(polylineId != null);
-    if (_polylines[polylineId]?.onTap != null) {
-      _polylines[polylineId].onTap();
-    }
-  }
-
-  void onCircleTap(CircleId circleId) {
-    assert(circleId != null);
-    _circles[circleId].onTap();
   }
 
   void onInfoWindowTap(MarkerId markerId) {

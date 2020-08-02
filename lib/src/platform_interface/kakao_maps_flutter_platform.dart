@@ -76,45 +76,6 @@ abstract class KakaoMapsFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('updateMarkers() has not been implemented.');
   }
 
-  /// Updates polygon configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> updatePolygons(
-    PolygonUpdates polygonUpdates, {
-    @required int mapId,
-  }) {
-    throw UnimplementedError('updatePolygons() has not been implemented.');
-  }
-
-  /// Updates polyline configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> updatePolylines(
-    PolylineUpdates polylineUpdates, {
-    @required int mapId,
-  }) {
-    throw UnimplementedError('updatePolylines() has not been implemented.');
-  }
-
-  /// Updates circle configuration.
-  ///
-  /// Change listeners are notified once the update has been made on the
-  /// platform side.
-  ///
-  /// The returned [Future] completes after listeners have been notified.
-  Future<void> updateCircles(
-    CircleUpdates circleUpdates, {
-    @required int mapId,
-  }) {
-    throw UnimplementedError('updateCircles() has not been implemented.');
-  }
-
   /// Starts an animated change of the map camera position.
   ///
   /// The returned [Future] completes after the change has been started on the
@@ -312,21 +273,6 @@ abstract class KakaoMapsFlutterPlatform extends PlatformInterface {
   /// A [Marker] has been dragged to a different [LatLng] position.
   Stream<MarkerDragEndEvent> onMarkerDragEnd({@required int mapId}) {
     throw UnimplementedError('onMarkerDragEnd() has not been implemented.');
-  }
-
-  /// A [Polyline] has been tapped.
-  Stream<PolylineTapEvent> onPolylineTap({@required int mapId}) {
-    throw UnimplementedError('onPolylineTap() has not been implemented.');
-  }
-
-  /// A [Polygon] has been tapped.
-  Stream<PolygonTapEvent> onPolygonTap({@required int mapId}) {
-    throw UnimplementedError('onPolygonTap() has not been implemented.');
-  }
-
-  /// A [Circle] has been tapped.
-  Stream<CircleTapEvent> onCircleTap({@required int mapId}) {
-    throw UnimplementedError('onCircleTap() has not been implemented.');
   }
 
   /// A Map has been tapped at a certain [LatLng].

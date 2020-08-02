@@ -15,7 +15,7 @@
         <!--  카카오 APP KEY 추가  -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="[AppKey]"/>
+            android:value="05bc7bdf55baac76e936e2bc7d8e4027"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
