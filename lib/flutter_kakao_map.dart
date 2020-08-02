@@ -37,7 +37,6 @@ export 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart'
     Marker,
     MarkerId,
     MinMaxZoomPreference,
-    PatternItem,
     ScreenCoordinate;
 
 part 'controller.dart';
