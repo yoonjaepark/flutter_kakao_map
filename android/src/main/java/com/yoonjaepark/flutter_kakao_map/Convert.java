@@ -234,10 +234,6 @@ class Convert {
         if (zoomControlsEnabled != null) {
             sink.setZoomControlsEnabled(toBoolean(zoomControlsEnabled));
         }
-        final Object myLocationButtonEnabled = data.get("myLocationButtonEnabled");
-        if (myLocationButtonEnabled != null) {
-            sink.setMyLocationButtonEnabled(toBoolean(myLocationButtonEnabled));
-        }
         final Object indoorEnabled = data.get("indoorEnabled");
         if (indoorEnabled != null) {
             sink.setIndoorEnabled(toBoolean(indoorEnabled));

@@ -35,8 +35,6 @@ interface KakaoMapOptionsSink {
 
     void setZoomControlsEnabled(boolean zoomControlsEnabled);
 
-    void setMyLocationButtonEnabled(boolean myLocationButtonEnabled);
-
     void setIndoorEnabled(boolean indoorEnabled);
 
     void setInitialMarkers(Object initialMarkers);

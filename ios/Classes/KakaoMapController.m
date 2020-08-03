@@ -283,10 +283,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
     showCurrentLocationMarker = enabled;
 }
 
-- (void)setMyLocationButtonEnabled:(BOOL)enabled {
-    _mapView.showCurrentLocationMarker = enabled;
-}
-
 //#pragma mark - Implementations of JSON conversion functions.
 
 static NSArray* MapPointToJson(MTMapPoint* mapPoint) {
@@ -355,11 +351,6 @@ static void InterpretMapOptions(NSDictionary* data, id<KakaoMapOptionsSink> sink
     if (showCurrentLocationMarker != nil) {
         [sink setShowCurrentLocationMarker:ToBool(showCurrentLocationMarker)];
     }
-    NSNumber* myLocationButtonEnabled = data[@"myLocationButtonEnabled"];
-    if (myLocationButtonEnabled != nil) {
-        [sink setMyLocationButtonEnabled:ToBool(myLocationButtonEnabled)];
-    }
-    
 }
 
 @end

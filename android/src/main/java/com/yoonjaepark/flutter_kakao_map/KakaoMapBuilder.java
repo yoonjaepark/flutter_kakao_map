@@ -128,11 +128,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
     }
 
     @Override
-    public void setMyLocationButtonEnabled(boolean myLocationButtonEnabled) {
-        this.myLocationButtonEnabled = myLocationButtonEnabled;
-    }
-
-    @Override
     public void setInitialMarkers(Object initialMarkers) {
         this.initialMarkers = initialMarkers;
     }

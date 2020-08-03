@@ -611,11 +611,6 @@ public class KakaoMapController
 
     }
 
-    @Override
-    public void setMyLocationButtonEnabled(boolean myLocationButtonEnabled) {
-
-    }
-
     public void setIndoorEnabled(boolean indoorEnabled) {
         this.indoorEnabled = indoorEnabled;
     }
