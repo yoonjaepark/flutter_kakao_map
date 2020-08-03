@@ -146,14 +146,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
                                        message:@"getMapCenterPoint called prior to map initialization"
                                        details:nil]);
         }
-    }
-    else if ([call.method isEqualToString:@"map#getLatLng"]) {
-        if (_mapView != nil && call.arguments) {
-        } else {
-            result([FlutterError errorWithCode:@"KakaoMap uninitialized"
-                                       message:@"getLatLng called prior to map initialization"
-                                       details:nil]);
-        }
     } else if ([call.method isEqualToString:@"map#waitForMap"]) {
         result(nil);
     } else if ([call.method isEqualToString:@"map#takeSnapshot"]) {
@@ -181,7 +173,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
     } else if ([call.method isEqualToString:@"markers#hideInfoWindow"]) {
     } else if ([call.method isEqualToString:@"markers#isInfoWindowShown"]) {
     } else if ([call.method isEqualToString:@"map#isCompassEnabled"]) {
-    } else if ([call.method isEqualToString:@"map#isMapToolbarEnabled"]) {
     } else if ([call.method isEqualToString:@"map#getMinMaxZoomLevels"]) {
     } else if ([call.method isEqualToString:@"map#getZoomLevel"]) {
     } else if ([call.method isEqualToString:@"map#isZoomGesturesEnabled"]) {
@@ -190,8 +181,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
     } else if ([call.method isEqualToString:@"map#isRotateGesturesEnabled"]) {
     } else if ([call.method isEqualToString:@"map#isScrollGesturesEnabled"]) {
     } else if ([call.method isEqualToString:@"map#isMyLocationButtonEnabled"]) {
-    } else if ([call.method isEqualToString:@"map#isTrafficEnabled"]) {
-    } else if ([call.method isEqualToString:@"map#isBuildingsEnabled"]) {
     } else if ([call.method isEqualToString:@"map#setStyle"]) {
     } else {
         result(FlutterMethodNotImplemented);

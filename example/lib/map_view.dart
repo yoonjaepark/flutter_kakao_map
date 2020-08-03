@@ -11,11 +11,6 @@ import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
 
 import 'page.dart';
 
-final LatLngBounds sydneyBounds = LatLngBounds(
-  southwest: const LatLng(-34.022631, 150.620685),
-  northeast: const LatLng(-33.571835, 151.325952),
-);
-
 class MapViewPage extends KakaoMapExampleAppPage {
   MapViewPage() : super(const Icon(Icons.map), 'Mapview');
 

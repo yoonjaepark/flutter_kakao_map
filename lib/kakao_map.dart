@@ -21,7 +21,6 @@ class KakaoMap extends StatefulWidget {
     this.onMapCreated,
     this.gestureRecognizers,
     this.compassEnabled = true,
-    this.mapToolbarEnabled = true,
     this.cameraTargetBounds = CameraTargetBounds.unbounded,
     this.mapType = MapType.standard,
     this.currentLocationTrackingMode = CurrentLocationTrackingMode.trackingModeOff,
@@ -39,8 +38,6 @@ class KakaoMap extends StatefulWidget {
     /// If no padding is specified default padding will be 0.
     this.padding = const EdgeInsets.all(0),
     this.indoorViewEnabled = false,
-    this.trafficEnabled = false,
-    this.buildingsEnabled = true,
     this.markers,
     this.onCameraMoveStarted,
     this.onCameraMove,
@@ -57,14 +54,11 @@ class KakaoMap extends StatefulWidget {
   /// Used to receive a [KakaoMapController] for this [KakaoMap].
   final MapCreatedCallback onMapCreated;
 
-  /// The initial position of the map's camera.
+  /// 지도 카메라의 초기 위치입니다.
   final CameraPosition initialCameraPosition;
 
   /// True if the map should show a compass when rotated.
   final bool compassEnabled;
-
-  /// True if the map should show a toolbar when you interact with the map. Android only.
-  final bool mapToolbarEnabled;
 
   /// Geographical bounding box for the camera target.
   final CameraTargetBounds cameraTargetBounds;
@@ -117,24 +111,25 @@ class KakaoMap extends StatefulWidget {
   ///    For example: pan, tilt, pinch to zoom, or rotate.
   final VoidCallback onCameraMoveStarted;
 
-  /// Called repeatedly as the camera continues to move after an
-  /// onCameraMoveStarted call.
-  ///
-  /// This may be called as often as once every frame and should
-  /// not perform expensive operations.
+  /// 지도 중심 좌표가 이동한 경우 호출된다.
   final CameraPositionCallback onCameraMove;
 
+  /// CurrentLocationEventListener interface를 구현하는 객체를 MapView 객체에 등록하여 
+  /// 현위치 트래킹 이벤트를 통보받을 수 있다.
   final CameraPositionCallback onCurrentLocationUpdate;
 
+  //단말 사용자가 POI Item을 선택한 경우 호출된다.
+  // 사용자가 MapView 에 등록된 POI Item 아이콘(마커)를 터치한 경우 호출된다.
   final MarkerSelectCallback onMarkerSelect;
+
   /// Called when camera movement has ended, there are no pending
   /// animations and the user has stopped interacting with the map.
   final VoidCallback onCameraIdle;
 
-  /// Called every time a [KakaoMap] is tapped.
+  /// 사용자가 지도 위를 터치한 경우 호출된다.
   final ArgumentCallback<MapPoint> onTap;
 
-  /// Called every time a [KakaoMap] is long pressed.
+  /// 사용자가 지도 위 한 지점을 길게 누른 경우(long press) 호출된다.
   final ArgumentCallback<MapPoint> onLongPress;
 
   /// True if a "My Location" layer should be shown on the map.
@@ -177,12 +172,6 @@ class KakaoMap extends StatefulWidget {
 
   /// Enables or disables the indoor view from the map
   final bool indoorViewEnabled;
-
-  /// Enables or disables the traffic layer of the map
-  final bool trafficEnabled;
-
-  /// Enables or disables showing 3D buildings where available
-  final bool buildingsEnabled;
 
   /// Which gestures should be consumed by the map.
   ///
@@ -311,7 +300,6 @@ class _KakaoMapState extends State<KakaoMap> {
 class _KakaoMapOptions {
   _KakaoMapOptions({
     this.compassEnabled,
-    this.mapToolbarEnabled,
     this.cameraTargetBounds,
     this.mapType,
     this.currentLocationTrackingMode,
@@ -326,15 +314,12 @@ class _KakaoMapOptions {
     this.myLocationEnabled,
     this.myLocationButtonEnabled,
     this.padding,
-    this.indoorViewEnabled,
-    this.trafficEnabled,
-    this.buildingsEnabled,
+    this.indoorViewEnabled
   });
 
   static _KakaoMapOptions fromWidget(KakaoMap map) {
     return _KakaoMapOptions(
       compassEnabled: map.compassEnabled,
-      mapToolbarEnabled: map.mapToolbarEnabled,
       cameraTargetBounds: map.cameraTargetBounds,
       mapType: map.mapType,
       currentLocationTrackingMode: map.currentLocationTrackingMode,
@@ -350,14 +335,10 @@ class _KakaoMapOptions {
       myLocationButtonEnabled: map.myLocationButtonEnabled,
       padding: map.padding,
       indoorViewEnabled: map.indoorViewEnabled,
-      trafficEnabled: map.trafficEnabled,
-      buildingsEnabled: map.buildingsEnabled,
     );
   }
 
   final bool compassEnabled;
-
-  final bool mapToolbarEnabled;
 
   final CameraTargetBounds cameraTargetBounds;
 
@@ -389,10 +370,6 @@ class _KakaoMapOptions {
 
   final bool indoorViewEnabled;
 
-  final bool trafficEnabled;
-
-  final bool buildingsEnabled;
-
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> optionsMap = <String, dynamic>{};
 
@@ -403,7 +380,6 @@ class _KakaoMapOptions {
     }
 
     addIfNonNull('compassEnabled', compassEnabled);
-    addIfNonNull('mapToolbarEnabled', mapToolbarEnabled);
     addIfNonNull('cameraTargetBounds', cameraTargetBounds?.toJson());
     addIfNonNull('mapType', mapType?.index);
     addIfNonNull('currentLocationTrackingMode', currentLocationTrackingMode?.index);
@@ -424,8 +400,6 @@ class _KakaoMapOptions {
       padding?.right,
     ]);
     addIfNonNull('indoorEnabled', indoorViewEnabled);
-    addIfNonNull('trafficEnabled', trafficEnabled);
-    addIfNonNull('buildingsEnabled', buildingsEnabled);
     return optionsMap;
   }
 

@@ -122,30 +122,6 @@ abstract class KakaoMapsFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('getVisibleRegion() has not been implemented.');
   }
 
-  /// Return [ScreenCoordinate] of the [LatLng] in the current map view.
-  ///
-  /// A projection is used to translate between on screen location and geographic coordinates.
-  /// Screen location is in screen pixels (not display pixels) with respect to the top left corner
-  /// of the map, not necessarily of the whole screen.
-  Future<ScreenCoordinate> getScreenCoordinate(
-    LatLng latLng, {
-    @required int mapId,
-  }) {
-    throw UnimplementedError('getScreenCoordinate() has not been implemented.');
-  }
-
-  /// Returns [LatLng] corresponding to the [ScreenCoordinate] in the current map view.
-  ///
-  /// A projection is used to translate between on screen location and geographic coordinates.
-  /// Screen location is in screen pixels (not display pixels) with respect to the top left corner
-  /// of the map, not necessarily of the whole screen.
-  Future<LatLng> getLatLng(
-    ScreenCoordinate screenCoordinate, {
-    @required int mapId,
-  }) {
-    throw UnimplementedError('getLatLng() has not been implemented.');
-  }
-
   /// Programmatically show the Info Window for a [Marker].
   ///
   /// The `markerId` must match one of the markers on the map.

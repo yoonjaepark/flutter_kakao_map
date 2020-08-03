@@ -160,23 +160,6 @@ class KakaoMapController {
     return _kakaoMapsFlutterPlatform.getVisibleRegion(mapId: mapId);
   }
 
-  /// Return [ScreenCoordinate] of the [LatLng] in the current map view.
-  ///
-  /// A projection is used to translate between on screen location and geographic coordinates.
-  /// Screen location is in screen pixels (not display pixels) with respect to the top left corner
-  /// of the map, not necessarily of the whole screen.
-  Future<ScreenCoordinate> getScreenCoordinate(LatLng latLng) {
-    return _kakaoMapsFlutterPlatform.getScreenCoordinate(latLng, mapId: mapId);
-  }
-
-  /// Returns [LatLng] corresponding to the [ScreenCoordinate] in the current map view.
-  ///
-  /// Returned [LatLng] corresponds to a screen location. The screen location is specified in screen
-  /// pixels (not display pixels) relative to the top left of the map, not top left of the whole screen.
-  Future<LatLng> getLatLng(ScreenCoordinate screenCoordinate) {
-    return _kakaoMapsFlutterPlatform.getLatLng(screenCoordinate, mapId: mapId);
-  }
-
   /// Programmatically show the Info Window for a [Marker].
   ///
   /// The `markerId` must match one of the markers on the map.

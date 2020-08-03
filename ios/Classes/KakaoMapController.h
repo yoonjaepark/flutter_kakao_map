@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCameraTargetBounds:(nullable MTMapBounds *)bounds;
 - (void)setCompassEnabled:(BOOL)enabled;
 - (void)setIndoorEnabled:(BOOL)enabled;
-- (void)setTrafficEnabled:(BOOL)enabled;
-- (void)setBuildingsEnabled:(BOOL)enabled;
 
 - (void)setMapType:(MTMapType)type;
 - (void)setCurrentLocationTrackingMode:(MTMapCurrentLocationTrackingMode)currentLocationTrackingMode;

@@ -298,38 +298,6 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
     return LatLngBounds(northeast: northeast, southwest: southwest);
   }
 
-  /// Return point [Map<String, int>] of the [screenCoordinateInJson] in the current map view.
-  ///
-  /// A projection is used to translate between on screen location and geographic coordinates.
-  /// Screen location is in screen pixels (not display pixels) with respect to the top left corner
-  /// of the map, not necessarily of the whole screen.
-  @override
-  Future<ScreenCoordinate> getScreenCoordinate(
-    LatLng latLng, {
-    @required int mapId,
-  }) async {
-    final Map<String, int> point = await channel(mapId)
-        .invokeMapMethod<String, int>(
-            'map#getScreenCoordinate', latLng.toJson());
-
-    return ScreenCoordinate(x: point['x'], y: point['y']);
-  }
-
-  /// Returns [LatLng] corresponding to the [ScreenCoordinate] in the current map view.
-  ///
-  /// Returned [LatLng] corresponds to a screen location. The screen location is specified in screen
-  /// pixels (not display pixels) relative to the top left of the map, not top left of the whole screen.
-  @override
-  Future<LatLng> getLatLng(
-    ScreenCoordinate screenCoordinate, {
-    @required int mapId,
-  }) async {
-    final List<dynamic> latLng = await channel(mapId)
-        .invokeMethod<List<dynamic>>(
-            'map#getLatLng', screenCoordinate.toJson());
-    return LatLng(latLng[0], latLng[1]);
-  }
-
   /// Programmatically show the Info Window for a [Marker].
   ///
   /// The `markerId` must match one of the markers on the map.

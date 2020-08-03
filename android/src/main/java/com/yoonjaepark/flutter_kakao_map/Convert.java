@@ -178,10 +178,6 @@ class Convert {
         if (compassEnabled != null) {
             sink.setCompassEnabled(toBoolean(compassEnabled));
         }
-        final Object mapToolbarEnabled = data.get("mapToolbarEnabled");
-        if (mapToolbarEnabled != null) {
-            sink.setMapToolbarEnabled(toBoolean(mapToolbarEnabled));
-        }
         final Object mapType = data.get("mapType");
         if (mapType != null) {
             sink.setMapType(toInt(mapType));
@@ -245,14 +241,6 @@ class Convert {
         final Object indoorEnabled = data.get("indoorEnabled");
         if (indoorEnabled != null) {
             sink.setIndoorEnabled(toBoolean(indoorEnabled));
-        }
-        final Object trafficEnabled = data.get("trafficEnabled");
-        if (trafficEnabled != null) {
-            sink.setTrafficEnabled(toBoolean(trafficEnabled));
-        }
-        final Object buildingsEnabled = data.get("buildingsEnabled");
-        if (buildingsEnabled != null) {
-            sink.setBuildingsEnabled(toBoolean(buildingsEnabled));
         }
     }
 

@@ -11,8 +11,6 @@ interface KakaoMapOptionsSink {
 
     void setCompassEnabled(boolean compassEnabled);
 
-    void setMapToolbarEnabled(boolean setMapToolbarEnabled);
-
     void setMapType(int mapType);
 
     void setCurrentLocationTrackingMode(int currentLocationTrackingMode);
@@ -40,10 +38,6 @@ interface KakaoMapOptionsSink {
     void setMyLocationButtonEnabled(boolean myLocationButtonEnabled);
 
     void setIndoorEnabled(boolean indoorEnabled);
-
-    void setTrafficEnabled(boolean trafficEnabled);
-
-    void setBuildingsEnabled(boolean buildingsEnabled);
 
     void setInitialMarkers(Object initialMarkers);
 

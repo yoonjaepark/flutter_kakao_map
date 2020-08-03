@@ -25,8 +25,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
     private boolean myLocationEnabled = false;
     private boolean myLocationButtonEnabled = false;
     private boolean indoorEnabled = true;
-    private boolean trafficEnabled = false;
-    private boolean buildingsEnabled = true;
     private Object initialMarkers;
     private Object initialPolygons;
     private Object initialPolylines;
@@ -66,10 +64,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
 
     @Override
     public void setCompassEnabled(boolean compassEnabled) {
-    }
-
-    @Override
-    public void setMapToolbarEnabled(boolean setMapToolbarEnabled) {
     }
 
     @Override
@@ -122,16 +116,6 @@ class KakaoMapBuilder implements KakaoMapOptionsSink {
     @Override
     public void setIndoorEnabled(boolean indoorEnabled) {
         this.indoorEnabled = indoorEnabled;
-    }
-
-    @Override
-    public void setTrafficEnabled(boolean trafficEnabled) {
-        this.trafficEnabled = trafficEnabled;
-    }
-
-    @Override
-    public void setBuildingsEnabled(boolean buildingsEnabled) {
-        this.buildingsEnabled = buildingsEnabled;
     }
 
     @Override

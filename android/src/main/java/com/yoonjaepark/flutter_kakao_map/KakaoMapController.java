@@ -82,8 +82,6 @@ public class KakaoMapController
     private boolean myLocationButtonEnabled = false;
     private boolean zoomControlsEnabled = true;
     private boolean indoorEnabled = true;
-    private boolean trafficEnabled = false;
-    private boolean buildingsEnabled = true;
     private boolean disposed = false;
     private final float density;
     private MethodChannel.Result mapReadyResult;
@@ -223,16 +221,6 @@ public class KakaoMapController
             {
                 MapView.clearMapTilePersistentCache();
             }
-            case "map#zoomIn":
-            {
-                mapView.zoomIn(true);
-                break;
-            }
-            case "map#zoomOut":
-            {
-                mapView.zoomOut(false);
-                break;
-            }
             case "map#getMapCenterPoint":
             {
                 Log.d("TEST", mapView.toString());
@@ -316,14 +304,6 @@ public class KakaoMapController
                 break;
             }
             case "map#isMyLocationButtonEnabled":
-            {
-                break;
-            }
-            case "map#isTrafficEnabled":
-            {
-                break;
-            }
-            case "map#isBuildingsEnabled":
             {
                 break;
             }
@@ -551,11 +531,6 @@ public class KakaoMapController
     }
 
     @Override
-    public void setMapToolbarEnabled(boolean setMapToolbarEnabled) {
-
-    }
-
-    @Override
     public void setMapType(int mapType) {
         MapView.MapType[] mapTypes = MapView.MapType.values();
         mapView.setMapType(mapTypes[mapType]);
@@ -645,13 +620,6 @@ public class KakaoMapController
         this.indoorEnabled = indoorEnabled;
     }
 
-    public void setTrafficEnabled(boolean trafficEnabled) {
-    }
-
-    public void setBuildingsEnabled(boolean buildingsEnabled) {
-        this.buildingsEnabled = buildingsEnabled;
-    }
-
     @Override
     public void setInitialMarkers(Object initialMarkers) {
         this.initialMarkers = (List<Object>) initialMarkers;
@@ -698,21 +666,28 @@ public class KakaoMapController
 
     }
 
+    // 현위치 갱신 작업에 실패한 경우 호출된다.
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
 
     }
 
+    // 현위치 트랙킹 기능이 사용자에 의해 취소된 경우 호출된다.
+    // 처음 현위치를 찾는 동안에 현위치를 찾는 중이라는 Alert Dialog 인터페이스가 사용자에게 노출된다.
+    // 첫 현위치를 찾기전에 사용자가 취소 버튼을 누른 경우 호출 된다.
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
 
     }
 
+    // MapView가 사용가능 한 상태가 되었음을 알려준다.
+    // onMapViewInitialized()가 호출된 이후에 MapView 객체가 제공하는 지도 조작 API들을 사용할 수 있다.
     @Override
     public void onMapViewInitialized(MapView mapView) {
-//        mapView.setMapCenterPoint(this.let);
+        // mapView.setMapCenterPoint(this.let);
     }
 
+    // 단말의 현위치 좌표값을 통보받을 수 있다.
     @Override
     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float accuracy) {
         final Map<String, Object> arguments = new HashMap<>(2);
@@ -721,6 +696,7 @@ public class KakaoMapController
         methodChannel.invokeMethod("camera#onCurrentLocationUpdate", arguments);
     }
 
+    // 지도 중심 좌표가 이동한 경우 호출된다.
     @Override
     public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
         final Map<String, Object> arguments = new HashMap<>(2);
@@ -728,11 +704,13 @@ public class KakaoMapController
         methodChannel.invokeMethod("camera#onMove", arguments);
     }
 
+    // 지도 확대/축소 레벨이 변경된 경우 호출된다.
     @Override
     public void onMapViewZoomLevelChanged(MapView mapView, int i) {
 
     }
 
+    // 사용자가 지도 위를 터치한 경우 호출된다.
     @Override
     public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
         final Map<String, Object> arguments = new HashMap<>(2);
@@ -740,11 +718,13 @@ public class KakaoMapController
         methodChannel.invokeMethod("map#onTap", arguments);
     }
 
+    // 사용자가 지도 위 한 지점을 더블 터치한 경우 호출된다.
     @Override
     public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
 
     }
 
+    // 사용자가 지도 위 한 지점을 길게 누른 경우(long press) 호출된다.
     @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
         final Map<String, Object> arguments = new HashMap<>(2);
@@ -752,27 +732,34 @@ public class KakaoMapController
         methodChannel.invokeMethod("map#onLongPress", arguments);
     }
 
+    // 사용자가 지도 드래그를 시작한 경우 호출된다.
     @Override
     public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
 
     }
 
+    // 사용자가 지도 드래그를 끝낸 경우 호출된다.
     @Override
     public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
 
     }
 
+    // 지도의 이동이 완료된 경우 호출된다.
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 
     }
 
+    // 설정한 APP KEY값을 인증 서버에 요청하여 인증 여부를 통보받을 수 있다.
+    // APP KEY 는 Android Application Package Name당 하나씩 카카오 개발자 APP KEY 발급 페이지 를 통해서 발급할 수 있다.
     @Override
     public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int i, String s) {
         mapView.setMapCenterPointAndZoomLevel(this.options.initialCameraPosition.target, 3, true);
         markersController.setKakaoMap(mapView);
     }
 
+    //단말 사용자가 POI Item을 선택한 경우 호출된다.
+    // 사용자가 MapView 에 등록된 POI Item 아이콘(마커)를 터치한 경우 호출된다.
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
         markersController.onMarkerTap(mapPOIItem.getUserObject().toString());
@@ -787,7 +774,9 @@ public class KakaoMapController
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
 
     }
-
+    
+    // 단말 사용자가 길게 누른 후(long press) 끌어서(dragging) 위치 이동이 가능한 POI Item의 위치를 이동시킨 경우 호출된다.
+    // 이동가능한 POI Item을 Draggable POI Item 이라 한다.
     @Override
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
