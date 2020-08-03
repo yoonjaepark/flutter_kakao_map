@@ -18,14 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setHDMapTile:(BOOL)enabled;
 
 - (void)setMinZoom:(float)minZoom maxZoom:(float)maxZoom;
-- (void)setPaddingTop:(float)top left:(float)left bottom:(float)bottom right:(float)right;
 - (void)setRotateGesturesEnabled:(BOOL)enabled;
 - (void)setScrollGesturesEnabled:(BOOL)enabled;
 - (void)setTiltGesturesEnabled:(BOOL)enabled;
 - (void)setTrackCameraPosition:(BOOL)enabled;
 - (void)setZoomGesturesEnabled:(BOOL)enabled;
-- (void)setShowCurrentLocationMarker:(BOOL)enabled;
-- (void)setMyLocationButtonEnabled:(BOOL)enabled;
 - (nullable NSString *)setMapStyle:(NSString *)mapStyle;
 @end
 

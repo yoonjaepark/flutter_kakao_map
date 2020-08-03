@@ -540,7 +540,6 @@ public class KakaoMapController
     public void setCurrentLocationTrackingMode(int currentLocationTrackingMode) {
         MapView.CurrentLocationTrackingMode[] trackingModes = MapView.CurrentLocationTrackingMode.values();
         MapView.CurrentLocationTrackingMode trackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff;
-        mapView.setShowCurrentLocationMarker(true);
         if (currentLocationTrackingMode == 0) {
             trackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff;
         } else if (currentLocationTrackingMode == 1) {
@@ -760,11 +759,13 @@ public class KakaoMapController
         markersController.onMarkerTap(mapPOIItem.getUserObject().toString());
     }
 
+    // 단말 사용자가 POI Item 아이콘(마커) 위에 나타난 말풍선(Callout Balloon)을 터치한 경우
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
 
     }
 
+    // 단말 사용자가 POI Item 아이콘(마커) 위에 나타난 말풍선(Callout Balloon)을 터치한 경우
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
 

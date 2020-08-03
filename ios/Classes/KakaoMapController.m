@@ -193,7 +193,7 @@ static NSDictionary* ToPositon(NSDictionary* json);
 }
 
 
-// 단말의 현위치 좌표값
+// 단말의 현위치 좌표값을 통보받을 수 있다.
 - (void)mapView:(MTMapView*)mapView updateCurrentLocation:(MTMapPoint*)location withAccuracy:(MTMapLocationAccuracy)accuracy {
     [_channel invokeMethod:@"camera#onCurrentLocationUpdate" arguments:@{
         @"position": MapPointToJson(location),
@@ -279,10 +279,6 @@ static NSDictionary* ToPositon(NSDictionary* json);
     _mapView.useHDMapTile = enabled;
 }
 
-- (void)setShowCurrentLocationMarker:(BOOL)enabled {
-    showCurrentLocationMarker = enabled;
-}
-
 //#pragma mark - Implementations of JSON conversion functions.
 
 static NSArray* MapPointToJson(MTMapPoint* mapPoint) {
@@ -346,10 +342,6 @@ static void InterpretMapOptions(NSDictionary* data, id<KakaoMapOptionsSink> sink
     id hdMapTile = data[@"hdMapTile"];
     if (hdMapTile) {
         [sink setHDMapTile:ToBool(hdMapTile)];
-    }
-    NSNumber* showCurrentLocationMarker = data[@"showCurrentLocationMarker"];
-    if (showCurrentLocationMarker != nil) {
-        [sink setShowCurrentLocationMarker:ToBool(showCurrentLocationMarker)];
     }
 }
 
