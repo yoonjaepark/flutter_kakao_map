@@ -71,7 +71,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
     );
   }
 
-    void onMapCreated(KakaoMapController controller) {
+  void onMapCreated(KakaoMapController controller) {
     setState(() {
       _controller = controller;
       _isMapCreated = true;
@@ -84,8 +84,7 @@ class _MapCoordinatesBodyState extends State<_MapCoordinatesBody> {
       child: RaisedButton(
         child: const Text('Get Map Center Point'),
         onPressed: () async {
-          final MapPoint visibleRegion =
-              await _controller.getMapCenterPoint();
+          final MapPoint visibleRegion = await _controller.getMapCenterPoint();
           setState(() {
             _visibleRegion = visibleRegion;
           });

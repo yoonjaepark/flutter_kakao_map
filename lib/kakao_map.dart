@@ -23,7 +23,8 @@ class KakaoMap extends StatefulWidget {
     this.compassEnabled = true,
     this.cameraTargetBounds = CameraTargetBounds.unbounded,
     this.mapType = MapType.standard,
-    this.currentLocationTrackingMode = CurrentLocationTrackingMode.trackingModeOff,
+    this.currentLocationTrackingMode =
+        CurrentLocationTrackingMode.trackingModeOff,
     this.hdMapTileEnabled = true,
     this.minMaxZoomPreference = MinMaxZoomPreference.unbounded,
     this.rotateGesturesEnabled = true,
@@ -66,7 +67,7 @@ class KakaoMap extends StatefulWidget {
   /// 지도 종류
   final MapType mapType;
 
-  /// 현위치 트랙킹 타입 
+  /// 현위치 트랙킹 타입
   final CurrentLocationTrackingMode currentLocationTrackingMode;
 
   /// 고해상도 지도 타일 사용 여부를 설정한다.
@@ -114,7 +115,7 @@ class KakaoMap extends StatefulWidget {
   /// 지도 중심 좌표가 이동한 경우 호출된다.
   final CameraPositionCallback onCameraMove;
 
-  /// CurrentLocationEventListener interface를 구현하는 객체를 MapView 객체에 등록하여 
+  /// CurrentLocationEventListener interface를 구현하는 객체를 MapView 객체에 등록하여
   /// 현위치 트래킹 이벤트를 통보받을 수 있다.
   final CameraPositionCallback onCurrentLocationUpdate;
 
@@ -157,6 +158,7 @@ class KakaoMap extends StatefulWidget {
   /// when the map tries to turn on the My Location layer.
   final bool myLocationEnabled;
   final bool showCurrentLocationMarker;
+
   /// Enables or disables the my-location button.
   ///
   /// The my-location button causes the camera to move such that the user's
@@ -191,7 +193,7 @@ class KakaoMap extends StatefulWidget {
 
 class _KakaoMapState extends State<KakaoMap> {
   final Completer<KakaoMapController> _controller =
-  Completer<KakaoMapController>();
+      Completer<KakaoMapController>();
 
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   _KakaoMapOptions _kakaoMapOptions;
@@ -227,7 +229,7 @@ class _KakaoMapState extends State<KakaoMap> {
   void _updateOptions() async {
     final _KakaoMapOptions newOptions = _KakaoMapOptions.fromWidget(widget);
     final Map<String, dynamic> updates =
-    _kakaoMapOptions.updatesMap(newOptions);
+        _kakaoMapOptions.updatesMap(newOptions);
     if (updates.isEmpty) {
       return;
     }
@@ -298,24 +300,23 @@ class _KakaoMapState extends State<KakaoMap> {
 /// When used to change configuration, null values will be interpreted as
 /// "do not change this configuration option".
 class _KakaoMapOptions {
-  _KakaoMapOptions({
-    this.compassEnabled,
-    this.cameraTargetBounds,
-    this.mapType,
-    this.currentLocationTrackingMode,
-    this.hdMapTileEnabled,
-    this.minMaxZoomPreference,
-    this.rotateGesturesEnabled,
-    this.scrollGesturesEnabled,
-    this.tiltGesturesEnabled,
-    this.trackCameraPosition,
-    this.zoomControlsEnabled,
-    this.zoomGesturesEnabled,
-    this.myLocationEnabled,
-    this.myLocationButtonEnabled,
-    this.padding,
-    this.indoorViewEnabled
-  });
+  _KakaoMapOptions(
+      {this.compassEnabled,
+      this.cameraTargetBounds,
+      this.mapType,
+      this.currentLocationTrackingMode,
+      this.hdMapTileEnabled,
+      this.minMaxZoomPreference,
+      this.rotateGesturesEnabled,
+      this.scrollGesturesEnabled,
+      this.tiltGesturesEnabled,
+      this.trackCameraPosition,
+      this.zoomControlsEnabled,
+      this.zoomGesturesEnabled,
+      this.myLocationEnabled,
+      this.myLocationButtonEnabled,
+      this.padding,
+      this.indoorViewEnabled});
 
   static _KakaoMapOptions fromWidget(KakaoMap map) {
     return _KakaoMapOptions(
@@ -382,7 +383,8 @@ class _KakaoMapOptions {
     addIfNonNull('compassEnabled', compassEnabled);
     addIfNonNull('cameraTargetBounds', cameraTargetBounds?.toJson());
     addIfNonNull('mapType', mapType?.index);
-    addIfNonNull('currentLocationTrackingMode', currentLocationTrackingMode?.index);
+    addIfNonNull(
+        'currentLocationTrackingMode', currentLocationTrackingMode?.index);
     addIfNonNull('hdMapTile', hdMapTileEnabled);
     addIfNonNull('minMaxZoomPreference', minMaxZoomPreference?.toJson());
     addIfNonNull('rotateGesturesEnabled', rotateGesturesEnabled);
@@ -408,6 +410,6 @@ class _KakaoMapOptions {
 
     return newOptions.toMap()
       ..removeWhere(
-              (String key, dynamic value) => prevOptionsMap[key] == value);
+          (String key, dynamic value) => prevOptionsMap[key] == value);
   }
 }

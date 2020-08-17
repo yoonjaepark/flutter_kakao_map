@@ -65,17 +65,12 @@ class KakaoMapController {
           .listen((e) => {_kakaoMapState.widget.onCameraMove(e.value)});
     }
     if (_kakaoMapState.widget.onCurrentLocationUpdate != null) {
-      _kakaoMapsFlutterPlatform
-          .onCurrentLocationUpdate(mapId: mapId)
-          .listen((e) => {
-                _kakaoMapState.widget.onCurrentLocationUpdate(e.value)
-              });
+      _kakaoMapsFlutterPlatform.onCurrentLocationUpdate(mapId: mapId).listen(
+          (e) => {_kakaoMapState.widget.onCurrentLocationUpdate(e.value)});
     }
 
     if (_kakaoMapState.widget.onMarkerSelect != null) {
-      _kakaoMapsFlutterPlatform
-        .onMarkerSelect(mapId: mapId)
-        .listen((e) => {
+      _kakaoMapsFlutterPlatform.onMarkerSelect(mapId: mapId).listen((e) => {
             // _kakaoMapState.widget.onMarkerSelect(e.value)
           });
     }

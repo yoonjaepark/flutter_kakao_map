@@ -22,10 +22,10 @@ class CameraPosition {
     @required this.target,
     // this.tilt = 0.0,
     this.zoom = 0.0,
-  })  : 
-  // assert(bearing != null),
+  })  :
+        // assert(bearing != null),
         assert(target != null),
-  // assert(tilt != null),
+        // assert(tilt != null),
         assert(zoom != null);
 
   /// The camera's bearing in degrees, measured clockwise from north.
@@ -91,11 +91,11 @@ class CameraPosition {
     if (identical(this, other)) return true;
     if (runtimeType != other.runtimeType) return false;
     final CameraPosition typedOther = other;
-    return 
+    return
         // bearing == typedOther.bearing &&
         target == typedOther.target &&
-        // tilt == typedOther.tilt &&
-        zoom == typedOther.zoom;
+            // tilt == typedOther.tilt &&
+            zoom == typedOther.zoom;
   }
 
   @override
@@ -140,9 +140,9 @@ class CameraUpdate {
 
   /// Returns a camera update that moves the camera target to the specified
   /// geographical location and zoom level.
-  static CameraUpdate newMapPointZoom(MapPoint MapPoint, double zoom) {
+  static CameraUpdate newMapPointZoom(MapPoint mapPoint, double zoom) {
     return CameraUpdate._(
-      <dynamic>['newMapPointZoom', MapPoint.toJson(), zoom],
+      <dynamic>['newMapPointZoom', mapPoint.toJson(), zoom],
     );
   }
 

@@ -43,7 +43,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
 
   KakaoMapController controller;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-  
+
   MarkerId selectedMarker;
   int _markerIdCounter = 1;
 
@@ -202,12 +202,10 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     });
   }
 
-  void _onMarkerSelect(MarkerTag markerId) {
-  }
+  void _onMarkerSelect(MarkerTag markerId) {}
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,

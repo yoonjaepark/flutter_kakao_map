@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="90bd255c-a14d-4759-93d1-1401d63c9867" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/Convert.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/Convert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/example/lib/map_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/example/lib/map_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/ios/Classes/KakaoMapController.h" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/ios/Classes/KakaoMapController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/ios/Classes/KakaoMapController.m" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/ios/Classes/KakaoMapController.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/src/method_channel/method_channel_kakao_maps_flutter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/src/method_channel/method_channel_kakao_maps_flutter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/src/types/types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_kakao_map/lib/src/types/types.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/map_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/map_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/KakaoMapController.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/KakaoMapController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/KakaoMapController.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/KakaoMapController.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/method_channel/method_channel_kakao_maps_flutter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/method_channel/method_channel_kakao_maps_flutter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/types/types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/types/types.dart" afterDir="false" />
-    </list>
+    <list default="true" id="90bd255c-a14d-4759-93d1-1401d63c9867" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,12 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="431">
-              <caret line="794" column="5" selection-start-line="794" selection-start-column="5" selection-end-line="794" selection-end-column="5" />
-              <folding>
-                <element signature="e#7087#7088#0" expanded="true" />
-                <element signature="e#7135#7136#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="429">
+              <caret line="771" column="5" selection-start-line="771" selection-start-column="5" selection-end-line="771" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -149,6 +129,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -250,7 +231,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -292,17 +272,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.3390558" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.19527897" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Resources Explorer" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.32970026" />
       <window_info anchor="bottom" id="Run" order="1" weight="0.32891566" />
       <window_info anchor="bottom" id="TODO" order="2" />
@@ -310,6 +288,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Flutter Inspector" order="2" />
@@ -373,12 +352,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/android/src/main/java/com/yoonjaepark/flutter_kakao_map/KakaoMapController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="794" column="5" selection-start-line="794" selection-start-column="5" selection-end-line="794" selection-end-column="5" />
-          <folding>
-            <element signature="e#7087#7088#0" expanded="true" />
-            <element signature="e#7135#7136#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="429">
+          <caret line="771" column="5" selection-start-line="771" selection-start-column="5" selection-end-line="771" selection-end-column="5" />
         </state>
       </provider>
     </entry>

@@ -174,7 +174,8 @@ class MapViewBodyState extends State<MapViewBody> {
                   'camera target: ${_position.target.latitude.toStringAsFixed(4)},'
                   '${_position.target.longitude.toStringAsFixed(4)}'),
               Text('camera zoom: ${_position.zoom}'),
-              Text('center: ${_centerMapPoint.latitude.toStringAsFixed(4)}, ${_centerMapPoint.longitude.toStringAsFixed(4)}'),
+              Text(
+                  'center: ${_centerMapPoint.latitude.toStringAsFixed(4)}, ${_centerMapPoint.longitude.toStringAsFixed(4)}'),
               Text(
                   'current: ${_currenPosition.target.latitude.toStringAsFixed(4)},'
                   '${_currenPosition.target.longitude.toStringAsFixed(4)}'),

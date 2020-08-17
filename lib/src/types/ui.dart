@@ -85,7 +85,7 @@ class MinMaxZoomPreference {
 
   /// Unbounded zooming.
   static const MinMaxZoomPreference unbounded =
-  MinMaxZoomPreference(null, null);
+      MinMaxZoomPreference(null, null);
 
   /// Converts this object to something serializable in JSON.
   dynamic toJson() => <dynamic>[minZoom, maxZoom];

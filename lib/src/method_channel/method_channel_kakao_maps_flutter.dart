@@ -78,11 +78,9 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
   }
 
   @override
-  Stream<MarkerSelectEvent> onMarkerSelect(
-      {@required int mapId}) {
+  Stream<MarkerSelectEvent> onMarkerSelect({@required int mapId}) {
     return _events(mapId).whereType<MarkerSelectEvent>();
   }
-
 
   @override
   Stream<CameraIdleEvent> onCameraIdle({@required int mapId}) {
@@ -148,8 +146,10 @@ class MethodChannelKakaoMapsFlutter extends KakaoMapsFlutterPlatform {
       case 'marker#onMarkerSelect':
         _mapEventStreamController.add(MarkerSelectEvent(
           mapId,
-          MarkerTag(target: MapPoint(call.arguments['target'][0],
-                  call.arguments['target'][1]), tag: call.arguments['id'].toString()),
+          MarkerTag(
+              target: MapPoint(
+                  call.arguments['target'][0], call.arguments['target'][1]),
+              tag: call.arguments['id'].toString()),
         ));
         break;
       case 'marker#onDragEnd':

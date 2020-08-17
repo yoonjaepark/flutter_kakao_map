@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter_kakao_map/kakao_maps_flutter_platform_interface.dart';
-import 'package:flutter_kakao_map/src/platform_interface/kakao_maps_flutter_platform.dart';
 import 'package:flutter_kakao_map/src/method_channel/method_channel_kakao_maps_flutter.dart';
+
 /// Generic Event coming from the native side of Maps.
 ///
 /// All MapEvents contain the `mapId` that originated the event. This should
@@ -73,7 +73,8 @@ class CameraMoveStartedEvent extends MapEvent<void> {
 }
 
 class CameraCurrentLocationEvent extends MapEvent<CameraPosition> {
-  CameraCurrentLocationEvent(int mapId, CameraPosition position) :super(mapId, position);
+  CameraCurrentLocationEvent(int mapId, CameraPosition position)
+      : super(mapId, position);
 }
 
 /// An event fired when a [Marker] is tapped.
@@ -137,5 +138,6 @@ class MapLongPressEvent extends _PositionedMapEvent<void> {
   /// Build an MapTap Event triggered from the map represented by `mapId`.
   ///
   /// The `position` of this event is the LatLng where the Map was long pressed.
-  MapLongPressEvent(int mapId, MapPoint position) : super(mapId, position, null);
+  MapLongPressEvent(int mapId, MapPoint position)
+      : super(mapId, position, null);
 }

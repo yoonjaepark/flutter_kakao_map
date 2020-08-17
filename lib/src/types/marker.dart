@@ -16,10 +16,9 @@ dynamic _offsetToJson(Offset offset) {
   return <dynamic>[offset.dx, offset.dy];
 }
 
-
 // POI Item 아이콘(마커) 타입
 enum MarkerType {
-  /// 파란색 핀 
+  /// 파란색 핀
   markerTypeBluePin,
 
   /// 빨간색 핀
@@ -36,7 +35,7 @@ enum MarkerSelectedType {
   /// 선택 효과를 사용하지 않음
   markerSelectedTypeNone,
 
-  /// 파란색 핀 
+  /// 파란색 핀
   markerSelectedTypeBluePin,
 
   /// 빨간색 핀
@@ -159,10 +158,10 @@ class MarkerTag {
     @required this.target,
     // this.tilt = 0.0,
     @required this.tag,
-  })  : 
-  // assert(bearing != null),
+  })  :
+        // assert(bearing != null),
         assert(target != null),
-  // assert(tilt != null),
+        // assert(tilt != null),
         assert(tag != null);
 
   /// The camera's bearing in degrees, measured clockwise from north.
@@ -228,11 +227,11 @@ class MarkerTag {
     if (identical(this, other)) return true;
     if (runtimeType != other.runtimeType) return false;
     final MarkerTag typedOther = other;
-    return 
+    return
         // bearing == typedOther.bearing &&
         target == typedOther.target &&
-        // tilt == typedOther.tilt &&
-        tag == typedOther.tag;
+            // tilt == typedOther.tilt &&
+            tag == typedOther.tag;
   }
 
   @override
@@ -373,7 +372,7 @@ class Marker {
   final MarkerType markerType;
 
   final MarkerSelectedType markerSelectedType;
-  
+
   final ShowAnimationType showAnimationType;
 
   /// Callbacks to receive tap events for markers placed on this map.
@@ -470,7 +469,7 @@ class Marker {
         position == typedOther.position &&
         rotation == typedOther.rotation &&
         visible == typedOther.visible &&
-        zIndex == typedOther.zIndex && 
+        zIndex == typedOther.zIndex &&
         markerType == typedOther.markerType &&
         markerSelectedType == typedOther.markerSelectedType &&
         showAnimationType == typedOther.showAnimationType;

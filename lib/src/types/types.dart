@@ -14,7 +14,6 @@ export 'joint_type.dart';
 export 'location.dart';
 export 'marker_updates.dart';
 export 'marker.dart';
-export 'pattern_item.dart';
 export 'screen_coordinate.dart';
 
 // Export the utils, they're used by the Widget
